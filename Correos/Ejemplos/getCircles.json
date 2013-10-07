@@ -1,0 +1,17 @@
+{
+    "success": true,
+    "circles": [ 
+         { 
+             "x_axis": 30,
+             "y_axis": 30,
+             "radius": 20,
+             "color" : "green"
+         },
+         { 
+             "x_axis": 60,
+             "y_axis": 60,
+             "radius": 20,
+             "color" : "blue"
+         }
+    ]
+}

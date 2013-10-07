@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html>
+    <head>
+        <script src="http://d3js.org/d3.v3.min.js"></script>
+    </head>
+    <body>
+        <script>
+        d3.json("getCircles.json", function(error, data) {
+            var circlesData = data.circles;
+            var svg = d3.select("body")
+                .append("svg")
+                    .attr("width", 100)
+                    .attr("height", 100);
+            var circles = svg.selectAll("circle")
+               .data(circlesData)
+               .enter().append("circle")
+                    .attr("cx", function(d) { return d.x_axis; })
+                    .attr("cy", function(d) { return d.y_axis; })
+                    .attr("r", function(d) { return d.radius; })
+                    .style("fill", function(d) { return d.color; });
+        });
+        </script>
+    </body>
+</html>
