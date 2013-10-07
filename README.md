@@ -1,2 +1,4 @@
 ChicasSuperPoderosas
 ====================
+
+Equipo 6!
