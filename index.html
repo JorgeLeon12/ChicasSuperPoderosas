@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head></head>
+
+<body>
+    <div id=""></div>
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script type="text/javascript">
+
+        var svg = d3.select("body").append("svg")
+            .attr("width", window.innerWidth+1000)
+            .attr("height", 500);
+
+        d3.json('target.json', function (jsondata) {
+            
+            var datos = [];
+            
+            for(var i = 0; i < jsondata.teamPerformance.length; i++){
+                datos[i] = jsondata.teamPerformance[i].finalTarget;
+            }
+
+            var minDataPoint = d3.min(datos);
+            var maxDataPoint = d3.max(datos);
+
+            var linearScale = d3.scale.linear()
+                .domain([minDataPoint,maxDataPoint])
+                .range([150,400]);
+
+            
+
+            var newFinalTarget = [];
+            var x = 0;
+            for(var i = 0; i < jsondata.teamPerformance.length; i++){
+                newFinalTarget[i] = linearScale(datos[i]);
+                
+                console.log(newFinalTarget[i]);
+                svg.append("image")
+                    .attr("width", newFinalTarget[i]*1.25)
+                    .attr("height", newFinalTarget[i])
+                    .attr("x", x)
+                    .attr("y", 500-newFinalTarget[i])
+                    .attr("xlink:href", "imagen.png");
+                    x += newFinalTarget[i];
+            }
+
+            
+            
+
+            /*
+            svg.append("polygon")
+                .attr("fill", "#174470")
+                .attr("points", "500,400 0,400 240,0 260,0")
+
+            svg.append("image")
+                .attr("overflow", "visible")
+                .attr("enable-background", "new")
+                .attr("width", 2367)
+                .attr("height", 1971)
+                .attr("xlink:href", "assets/descarga.png")
+                .attr("transform", "matrix(.239 0 0 .239 -36 -35.999)")
+                .attr("opacity", .2);
+                
+            svg.append("polygon")
+                .attr("opacity", .8)
+                .attr("fill", "#E6E6E6")
+                .attr("enable-background", "new")
+                .attr("points", "280.574,91.006 290,80 320,100 258.389,3 258.066,83.291");
+
+            svg.append("polygon")
+                .attr("opacity", .8)
+                .attr("fill", "#fff")
+                .attr("enable-background", "new")
+                .attr("points", "240.104,85.951 250.592,75.425 258.078,83.291 258.389,3 239.828,0 180,100 229.725,70");
+
+            svg.append("polygon")
+                .attr("fill", "#fff")
+                .attr("points", "340,399.95 305.5,264.446 258.389,199.95 258.389,3 240,0 0,399.951 500,399.951")
+                .attr("opacity", .1);
+
+            svg.append("path")
+                .attr("fill", "#E6E6E6")
+                .attr("d", "M500 399.951h-500l1.348-2.248 238.652-397.703h20l1.169 1.705 238.831 398.246zm-494.759-2.969h489.518l-236.37-393.982h-16.881l-236.267 393.982z")
+
+            */            
+
+            
+            
+
+           
+
+        });
+
+
+
+
+
+
+
+
+
+        
+ 
+    </script>
+   
+
+</body>
+</html>
