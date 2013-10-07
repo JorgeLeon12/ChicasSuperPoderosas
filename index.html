@@ -1,11 +1,23 @@
 <!DOCTYPE html>
 <html lang="es">
-<head></head>
+<head>
+<style type="text/css">
+	body{
+	background: url(assets/background-sky.svg) no-repeat center center fixed;
+	-moz-background-size: cover;
+	background-size: cover;
+	}
+</style>
+
+</head>
+
 
 <body>
     <div id=""></div>
     <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <script type="text/javascript">
+	
+		
 
         var svg = d3.select("body").append("svg")
             .attr("width", window.innerWidth+1000)
@@ -39,7 +51,7 @@
                     .attr("height", newFinalTarget[i])
                     .attr("x", x)
                     .attr("y", 500-newFinalTarget[i])
-                    .attr("xlink:href", "imagen.png");
+                    .attr("xlink:href", "assets/mountain.svg");
                     x += newFinalTarget[i];
             }
 
