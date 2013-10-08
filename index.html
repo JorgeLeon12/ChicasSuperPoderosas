@@ -10,7 +10,9 @@
 	background-size: cover;
 	}
 </style> -->
-
+<title>
+    Performance
+</title>
 </head>
 
 
@@ -81,20 +83,43 @@
                     .attr("y", h-newFinalTarget[i])
                     .attr("xlink:href", "assets/green-mountain.svg");
 
-                 svg.append("image")
-                    .attr("width", newFinalTarget[i]*1.25)
-                    .attr("height", newFinalTarget[i]-newActual[i])
-                    .attr("x", x)
-                    .attr("y", h-newFinalTarget[i])
-                    .attr("xlink:href", "assets/mountain.svg");
+
+
+                if (newActual[i]>newFinalTarget[i]){
+                    svg.append("image")
+                        .attr("width", 60)
+                        .attr("height", 84)
+                        .attr("x", x+(newFinalTarget[i]*1.25)/2-30)
+                        .attr("y", h-newActual[i])
+                        .attr("xlink:href", "assets/balloon.svg");
+                }    
+
+
+                if (newActual[i]==newFinalTarget[i]){
+                    svg.append("image")
+                        .attr("width", 37.193)
+                        .attr("height", 44.126)
+                        .attr("x", x+(newFinalTarget[i]*1.25)/2+37.193/40)
+                        .attr("y", h-newFinalTarget[i]-44.126)
+                        .attr("xlink:href", "assets/flag-annual-target.svg");
+                }
+
+                else{
+                    
+                    svg.append("image")
+                        .attr("width", newFinalTarget[i]*1.25)
+                        .attr("height", newFinalTarget[i]-newActual[i])
+                        .attr("x", x)
+                        .attr("y", h-newFinalTarget[i])
+                        .attr("xlink:href", "assets/mountain.svg");
 
                     svg.append("image")
-                    .attr("width", newFinalTarget[i]*1.25)
-                    .attr("height", newFinalTarget[i])
-                    .attr("x", x)
-                    .attr("y", h-newFinalTarget[i])
-                    .attr("xlink:href", "assets/TransMountain.svg");
-
+                        .attr("width", newFinalTarget[i]*1.25)
+                        .attr("height", newFinalTarget[i])
+                        .attr("x", x)
+                        .attr("y", h-newFinalTarget[i])
+                        .attr("xlink:href", "assets/TransMountain.svg");                    
+                }
 
                  /*   if(newActual[i]>newFinalTarget[i]){
                      svg.append("image")
