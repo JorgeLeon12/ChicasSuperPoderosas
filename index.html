@@ -43,9 +43,14 @@
         d3.json('target.json', function (jsondata) {
             
             var datos = [];
+
+            var actual= [];
+
+
             
             for(var i = 0; i < jsondata.teamPerformance.length; i++){
                 datos[i] = jsondata.teamPerformance[i].finalTarget;
+                actual[i]=jsondata.teamPerformance[i].data[jsondata.teamPerformance[i].data.length-1].amount;
             }
 
             var minDataPoint = d3.min(datos);
@@ -58,18 +63,36 @@
             
 
             var newFinalTarget = [];
+            var newActual= [];
             var x = 0;
             for(var i = 0; i < jsondata.teamPerformance.length; i++){
 
                 newFinalTarget[i] = linearScale(datos[i]);
-                console.log(newFinalTarget[i]);
+               newActual[i] = linearScale(actual[i]);    
+
+
+                console.log(newActual[i]);
                 svg.append("image")
                     .attr("width", newFinalTarget[i]*1.25)
                     .attr("height", newFinalTarget[i])
                     .attr("x", x)
                     .attr("y", h-newFinalTarget[i])
+                    .attr("xlink:href", "assets/green-mountain.svg");
+
+                 svg.append("image")
+                    .attr("width", newFinalTarget[i]*1.25)
+                    .attr("height", newFinalTarget[i]-newActual[i])
+                    .attr("x", x)
+                    .attr("y", h-newFinalTarget[i])
                     .attr("xlink:href", "assets/mountain.svg");
-                    x += newFinalTarget[i];
+                    
+
+
+
+
+
+                     x += newFinalTarget[i];
+
             }
 
             
