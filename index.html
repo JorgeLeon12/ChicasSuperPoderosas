@@ -11,8 +11,6 @@
 	}
 </style> -->
 
-
-
 </head>
 
 
@@ -85,6 +83,13 @@
                     .attr("x", x)
                     .attr("y", h-newFinalTarget[i])
                     .attr("xlink:href", "assets/mountain.svg");
+
+                    svg.append("image")
+                    .attr("width", newFinalTarget[i]*1.25)
+                    .attr("height", newFinalTarget[i])
+                    .attr("x", x)
+                    .attr("y", h-newFinalTarget[i])
+                    .attr("xlink:href", "assets/TransMountain.svg");
                     
 
 
@@ -133,12 +138,7 @@
                 .attr("fill", "#E6E6E6")
                 .attr("d", "M500 399.951h-500l1.348-2.248 238.652-397.703h20l1.169 1.705 238.831 398.246zm-494.759-2.969h489.518l-236.37-393.982h-16.881l-236.267 393.982z")
 
-            */            
-
-            
-            
-
-           
+            */                      
 
         });
 
