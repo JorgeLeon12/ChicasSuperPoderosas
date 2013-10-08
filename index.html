@@ -27,6 +27,15 @@
        
          d3.json('target.json', read);
 
+         function randomColor() { 
+                var letters = '0123456789ABCDEF'.split(''); 
+                var color = '#'; 
+                for (var i = 0; i < 6; i++ ) { 
+                    color += letters[Math.round(Math.random() * 15)]; 
+                    } 
+                    return color; 
+                }
+
         function read(jsondata) {
         
             for(var i = 0; i < jsondata.teamPerformance.length; i++){
@@ -108,16 +117,50 @@
                         .attr("x", x+(newFinalTarget[i]*1.25)/2-30-newFinalTarget[i])
                         .attr("y", h-newActual[i]-84)
                         .attr("xlink:href", "assets/balloon.svg");
+
+                    svg.append("circle")
+                        .attr("cx", x+(newFinalTarget[i]*1.25)/2-newFinalTarget[i])
+                        .attr("cy", h-newActual[i]+15)
+                        .attr("r", 10)
+                        .style("fill",randomColor());
+
+                    svg.append("line")
+                        .attr("x1", x+(newFinalTarget[i]*1.25)/2-newFinalTarget[i])
+                        .attr("x2", x+(newFinalTarget[i]*1.25)/2-newFinalTarget[i])
+                        .attr("y1", h-newFinalTarget[i])
+                        .attr("y2", h-newActual[i]+25)
+                        .style("stroked-width", "6")
+                        .style("stroke", "white");
+
+                    svg.append("circle")
+                        .attr("cx", x+(newFinalTarget[i]*1.25)/2-newFinalTarget[i])
+                        .attr("cy", h-newActual[i]+15)
+                        .attr("r", 4)
+                        .style("fill","white");
+
                 }    
 
 
-                if (newActual[i]==newFinalTarget[i]){
+                else if (newActual[i]==newFinalTarget[i]){
                     svg.append("image")
                         .attr("width", 37.193)
                         .attr("height", 44.126)
                         .attr("x", x+(newFinalTarget[i]*1.25)/2+37.193/40-newFinalTarget[i])
                         .attr("y", h-newFinalTarget[i]-44.126)
                         .attr("xlink:href", "assets/flag-annual-target.svg");
+
+                    svg.append("circle")
+                        .attr("cx", x+(newFinalTarget[i]*1.25)/2+37.193/40-newFinalTarget[i])
+                        .attr("cy", h-newActual[i])
+                        .attr("r", 10)
+                        .style("fill",randomColor());
+
+                    svg.append("circle")
+                        .attr("cx", x+(newFinalTarget[i]*1.25)/2+37.193/40-newFinalTarget[i])
+                        .attr("cy", h-newActual[i])
+                        .attr("r", 4)
+                        .style("fill","white");
+
                 }
 
                 else{
@@ -134,7 +177,20 @@
                         .attr("height", newFinalTarget[i])
                         .attr("x", x-newFinalTarget[i])
                         .attr("y", h-newFinalTarget[i])
-                        .attr("xlink:href", "assets/TransMountain.svg");                    
+                        .attr("xlink:href", "assets/TransMountain.svg");    
+
+
+                    svg.append("circle")
+                        .attr("cx", ((x - newFinalTarget[i]+(newFinalTarget[i]*1.25)) - (newActual[i])/1.6))
+                        .attr("cy", h-newActual[i])
+                        .attr("r", 10)
+                        .style("fill",randomColor());
+
+                    svg.append("circle")
+                        .attr("cx", ((x - newFinalTarget[i]+(newFinalTarget[i]*1.25)) - (newActual[i])/1.6))
+                        .attr("cy", h-newActual[i])
+                        .attr("r", 4)
+                        .style("fill","white");
                 }
 
                  svg.append("text")
