@@ -59,7 +59,7 @@
 
             var linearScale = d3.scale.linear()
                 .domain([minDataPoint,maxDataPoint])
-                .range([150,400]);
+                .range([minDataPoint/2000,maxDataPoint/2000]);
 
             
 
@@ -69,11 +69,11 @@
             for(var i = 0; i < jsondata.teamPerformance.length; i++){
 
                 newFinalTarget[i] = linearScale(datos[i]);
-               newActual[i] = linearScale(actual[i]);    
+               newActual[i] = linearScale(actual[i]);
 
 
-                console.log(newActual[i]);
-                console.log(names[i]);
+                console.log(newFinalTarget[i]);
+                
                 svg.append("image")
                     .attr("width", newFinalTarget[i]*1.25)
                     .attr("height", newFinalTarget[i])
@@ -83,7 +83,7 @@
 
                  svg.append("image")
                     .attr("width", newFinalTarget[i]*1.25)
-                    .attr("height", 1.25*newFinalTarget[i]-newActual[i])
+                    .attr("height", newFinalTarget[i]-newActual[i])
                     .attr("x", x)
                     .attr("y", h-newFinalTarget[i])
                     .attr("xlink:href", "assets/mountain.svg");
@@ -94,6 +94,21 @@
                     .attr("x", x)
                     .attr("y", h-newFinalTarget[i])
                     .attr("xlink:href", "assets/TransMountain.svg");
+
+
+                 /*   if(newActual[i]>newFinalTarget[i]){
+                     svg.append("image")
+                    .attr("width", 60)
+                    .attr("height", 84)
+                    .attr("x", x+(x/2))
+                    .attr("y", newActual[i])
+                    .attr("xlink:href", "assets/balloon.svg");
+
+
+
+
+
+                    }*/
                     
                 d3.select("body").append("i").html(names[i])
                 .attr("x",x)
