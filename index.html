@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<style type="text/css">
+<!--<style type="text/css">
 	body{
 	background: url(assets/background-sky.svg) no-repeat center center fixed;
 	-webkit-background-size: cover;
@@ -9,21 +9,36 @@
 	-o-background-size: cover;
 	background-size: cover;
 	}
-</style>
+</style> -->
+
+
 
 </head>
 
 
 <body>
+
     <div id=""></div>
     <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <script type="text/javascript">
 	
-		
+
+		var h = 480*1.5;
+        var w = 940*1.5;
 
         var svg = d3.select("body").append("svg")
-            .attr("width", window.innerWidth+1000)
-            .attr("height", 500);
+            .attr("width", w)
+            .attr("height", h);
+
+        svg.append("image")
+                    .attr("width", w)
+                    .attr("height", h)
+                    .attr("xlink:href", "assets/background-mountains.svg");
+        svg.append("image")
+                    .attr("width", w)
+                    .attr("height", h)
+                    .attr("xlink:href", "assets/background-sky.svg");
+      
 
         d3.json('target.json', function (jsondata) {
             
@@ -45,14 +60,14 @@
             var newFinalTarget = [];
             var x = 0;
             for(var i = 0; i < jsondata.teamPerformance.length; i++){
+
                 newFinalTarget[i] = linearScale(datos[i]);
-                
                 console.log(newFinalTarget[i]);
                 svg.append("image")
                     .attr("width", newFinalTarget[i]*1.25)
                     .attr("height", newFinalTarget[i])
                     .attr("x", x)
-                    .attr("y", 500-newFinalTarget[i])
+                    .attr("y", h-newFinalTarget[i])
                     .attr("xlink:href", "assets/mountain.svg");
                     x += newFinalTarget[i];
             }
