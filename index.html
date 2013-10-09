@@ -42,7 +42,7 @@ stroke: #CCC;
       position: absolute;
       text-align: center;
       border: solid 1px #666666;
-      min-width:250px;
+      min-width:280px;
   }
   </style>
 
@@ -173,6 +173,7 @@ stroke: #CCC;
                 .attr("x", 5770)
                 .attr("y", 150)
                 .attr("xlink:href", "assets/cloud-01.svg");
+				
             svg.append("image")
                 .attr("width", 100)
                 .attr("height", 100)
@@ -184,6 +185,7 @@ stroke: #CCC;
                 .attr("x", 5770)
                 .attr("y", 100)
                 .attr("xlink:href", "assets/cloud-02.svg");
+				
             svg.append("image")
                 .attr("width", newFinalTarget[i]*1.25)
                 .attr("height", newFinalTarget[i])
@@ -192,10 +194,9 @@ stroke: #CCC;
                 .attr("meta", datos[i])
                 .attr("numero", i)
                 .on("click", mousemove)
-                .attr("cx", x-(newFinalTarget[i]*1.25/2)+2)
+                .attr("cx", x-(newFinalTarget[i]*1.6))
                 .attr("cy", h-newActual[i]-195)
                 .attr("xlink:href", "assets/green-mountain.svg");
-
 
             if(newActual[i]>newFinalTarget[i]){
                     svg.append("image")
@@ -218,7 +219,7 @@ stroke: #CCC;
                     .attr("y", h-newFinalTarget[i])
                     .attr("numero", i)
                     .on("click", mousemove)
-                    .attr("cx", x - (newActual[i])/1.6)
+                    .attr("cx", x-(newFinalTarget[i]*1.25/2))
                     .attr("cy", h-newActual[i])
                     .transition()
                     .delay(100)
@@ -233,8 +234,8 @@ stroke: #CCC;
                     .attr("y", h-newFinalTarget[i])
                     .attr("numero", i)
                     .on("click", mousemove)
-                    .attr("cx", x - (newActual[i])/1.6)
-                    .attr("cy", h-newActual[i])
+                    .attr("cx", x-(newFinalTarget[i]*1.25/2))
+                    .attr("cy", h-newActual[i]+15)
                     .attr("xlink:href", "assets/TransMountain.svg");
 
 
@@ -334,7 +335,7 @@ stroke: #CCC;
                     .attr("x2", x - newFinalTarget[i]*1.25)  
                     .attr("y1", h)
                     .attr("y2", h)
-                    .style("stroke-width", "3")
+                    .style("stroke-width", "10")
                     .style("stroke", "white")
                     .transition()
                     .delay(100)
@@ -486,10 +487,6 @@ stroke: #CCC;
             .attr("font-family","serif")
             .attr("font-size","11")
             .attr("numero", i)
-            .on("click", mousemove)
-            //.on("mouseout", mouseout) 
-            .attr("cx",x - (newActual[i])/1.6)
-            .attr("cy", h-newActual[i])         
             .attr("fill", "white");
     }
 
@@ -507,8 +504,12 @@ stroke: #CCC;
         var promedio=last/meta*100;
 	    var cx = d3.select(this).attr("cx");
 	    var cy = d3.select(this).attr("cy")
-	    if(cy > 520){
-	       cy -= 210;
+		
+//		alert(cy);
+	       cy -= 185;
+//		
+	    if(cy < 180){
+	       cy += 190;
         }
         div
         .html("<font size='6'><b>" + names[i] + "</font><br><font size='5'>Sales Performance</font><br><font size='2' color='#7c8185'>Attainment vs Annual Goal</font><br><br><font size='4' color='#38761d'>"+ last+"K</font></b> of <b><font size='4' color='#1c4587'>"+meta+"K</font><br><br><font size='2' color='#7c8185'>% of Annual Goal Met</font><br><font size='5' color='#38761d'>"+promedio.toFixed(2)+"%</font></b>")
