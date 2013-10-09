@@ -109,7 +109,8 @@
                 .attr("x", x-newFinalTarget[i]*1.25)
                 .attr("y", h-newFinalTarget[i])
 						.attr("numero", i)
-						.on("click", mousemove)
+						.on("mouseover", mouseover)
+						.on("onclick", mousemove)
 						.on("mouseout", mouseout)
                 .attr("xlink:href", "assets/green-mountain.svg");
 
@@ -120,7 +121,8 @@
                     .attr("x", x-(newFinalTarget[i]*1.25/2)-30)
                     .attr("y", h-newActual[i]-84)
 						.attr("numero", i)
-						.on("click", mousemove)
+						.on("mouseover", mouseover)
+						.on("onclick", mousemove)
 						.on("mouseout", mouseout)
                     .attr("xlink:href", "assets/balloon.svg");
 
@@ -131,7 +133,8 @@
 						.attr("r", 10)
 						.style("fill",randomColor())
 						.attr("numero", i)
-						.on("click", mousemove)
+						.on("mouseover", mouseover)
+						.on("onclick", mousemove)
 						.on("mouseout", mouseout);
 
                     /*svg.append("circle")
@@ -163,7 +166,8 @@
 						.attr("r", 4)
 						.style("fill","white")
 						.attr("numero", i)
-						.on("click", mousemove)
+						.on("mouseover", mouseover)
+						.on("onclick", mousemove)
 						.on("mouseout", mouseout);
                 }    
 
@@ -183,7 +187,8 @@
 						.attr("r", 10)
 						.style("fill",randomColor())
 						.attr("numero", i)
-						.on("click", mousemove)
+						.on("mouseover", mouseover)
+						.on("onclick", mousemove)
 						.on("mouseout", mouseout);
 						
 					svg.append("svg:g")
@@ -193,7 +198,8 @@
 						.attr("r", 4)
 						.style("fill","white")
 						.attr("numero", i)
-						.on("click", mousemove)
+						.on("mouseover", mouseover)
+						.on("onclick", mousemove)
 						.on("mouseout", mouseout);
 					//
 					/*svg.append("circle")
@@ -217,7 +223,8 @@
                     .attr("x", x-newFinalTarget[i]*1.25)
                     .attr("y", h-newFinalTarget[i])
 						.attr("numero", i)
-						.on("click", mousemove)
+						.on("mouseover", mouseover)
+						.on("onclick", mousemove)
 						.on("mouseout", mouseout)
                     .attr("xlink:href", "assets/mountain.svg");
 
@@ -227,7 +234,8 @@
                     .attr("x", x-newFinalTarget[i]*1.25)
                     .attr("y", h-newFinalTarget[i])
 						.attr("numero", i)
-						.on("click", mousemove)
+						.on("mouseover", mouseover)
+						.on("onclick", mousemove)
 						.on("mouseout", mouseout)
                     .attr("xlink:href", "assets/TransMountain.svg");    
 
@@ -240,7 +248,8 @@
 						.attr("r", 10)
 						.style("fill",randomColor())
 						.attr("numero", i)
-						.on("click", mousemove)
+						.on("mouseover", mouseover)
+						.on("onclick", mousemove)
 						.on("mouseout", mouseout);
 						
 					svg.append("svg:g")
@@ -250,7 +259,8 @@
 						.attr("r", 5)
 						.style("fill","white")
 						.attr("numero", i)
-						.on("click", mousemove)
+						.on("mouseover", mouseover)
+						.on("onclick", mousemove)
 						.on("mouseout", mouseout);
 					//
 					
@@ -277,7 +287,8 @@
                     .style("stroke-width", "2")
                     .style("stroke", "black")
 						.attr("numero", i)
-						.on("click", mousemove)
+						.on("mouseover", mouseover)
+						.on("onclick", mousemove)
 						.on("mouseout", mouseout)
                     .style("stroke-dasharray", ("3, 3"));
                 }
@@ -301,7 +312,8 @@
                 .attr("font-family","serif")
                 .attr("font-size","11")
 						.attr("numero", i)
-						.on("click", mousemove)
+						.on("mouseover", mouseover)
+						.on("onclick", mousemove)
 						.on("mouseout", mouseout)
                 .attr("fill", "white");
 				
@@ -312,13 +324,24 @@
 		var div = d3.select("body").append("div")
 			.attr("class", "tooltip")
 			.style("opacity", 1e-6);
-					
-		function mousemove() {
+			
+			function mouseover() {
 			div.transition()
 			.duration(500)
 			.style("opacity", 1);
+		}
 		
+		function mousemove() {
 			var i = d3.select(this).attr("numero");
+			/*
+			.html("<font size='15'><b>" + names[i] + "</font><br>
+			<font size='13'>Sales Performance</font><br>
+			<font size='15' color='#7c8185'>Attainment vs Annual Goal</font><br>
+			<font size='15' color='#38761d'>NunVerde</font></b> of <b><font size='15' color='#1c4587'>NumAzul</font><br>
+			<font size='15' color='#7c8185'>% of Annual Goal Met</font><br>
+			<font size='15' color='#38761d'>NumVerde%</font></b>
+			")
+			*/
 			div
 			.html("<font size='6'><b>" + names[i] + "</font><br><font size='5'>Sales Performance</font><br><font size='2' color='#7c8185'>Attainment vs Annual Goal</font><br><br><font size='4' color='#38761d'>1</font></b> of <b><font size='4' color='#1c4587'>NumAzul</font><br><br><font size='2' color='#7c8185'>% of Annual Goal Met</font><br><font size='5' color='#38761d'>NumVerde%</font></b>")
 			.style("left", (d3.event.pageX - 230) + "px")
