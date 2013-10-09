@@ -15,7 +15,7 @@
       position: absolute;
       text-align: center;
       border: solid 1px #666666;
-      min-width:200px;
+      min-width:250px;
   }
   </style>
 
@@ -109,9 +109,11 @@
                 .attr("x", x-newFinalTarget[i]*1.25)
                 .attr("y", h-newFinalTarget[i])
                 .attr("meta", datos[i])
-                .attr("numero", i)
-                .on("click", mousemove)
-                .on("mouseout", mouseout)
+					.attr("numero", i)
+					.on("click", mousemove)
+					.on("mouseout", mouseout)
+					.attr("cx", x-(newFinalTarget[i]*1.25/2)+2)
+					.attr("cy", h-newActual[i]-195)
                 .attr("xlink:href", "assets/green-mountain.svg");
 
                 if (newActual[i]>newFinalTarget[i]){
@@ -120,9 +122,6 @@
                     .attr("height", 84)
                     .attr("x", x-(newFinalTarget[i]*1.25/2)-30)
                     .attr("y", h-newActual[i]-84)
-                    .attr("numero", i)
-                    .on("click", mousemove)
-                    .on("mouseout", mouseout)
                     .attr("xlink:href", "assets/balloon.svg");
 
                     svg.append("svg:g")
@@ -174,6 +173,8 @@
                     .attr("height", 44.126)
                     .attr("x", x-(newFinalTarget[i]*1.25/2))
                     .attr("y", h-newFinalTarget[i]-44.126)
+						.attr("cx", x-(newFinalTarget[i]*1.25/2))
+						.attr("cy", h-newActual[i])
                     .attr("xlink:href", "assets/flag-annual-target.svg");
 
                     //
@@ -217,9 +218,11 @@
                     .attr("height", newFinalTarget[i]-newActual[i])
                     .attr("x", x-newFinalTarget[i]*1.25)
                     .attr("y", h-newFinalTarget[i])
-                    .attr("numero", i)
-                    .on("click", mousemove)
-                    .on("mouseout", mouseout)
+						.attr("numero", i)
+						.on("click", mousemove)
+						.on("mouseout", mouseout)
+						.attr("cx", x - (newActual[i])/1.6)
+						.attr("cy", h-newActual[i])
                     .attr("xlink:href", "assets/mountain.svg");
 
                     svg.append("image")
@@ -227,9 +230,11 @@
                     .attr("height", newFinalTarget[i])
                     .attr("x", x-newFinalTarget[i]*1.25)
                     .attr("y", h-newFinalTarget[i])
-                    .attr("numero", i)
-                    .on("click", mousemove)
-                    .on("mouseout", mouseout)
+						.attr("numero", i)
+						.on("click", mousemove)
+						.on("mouseout", mouseout)
+						.attr("cx", x - (newActual[i])/1.6)
+						.attr("cy", h-newActual[i])
                     .attr("xlink:href", "assets/TransMountain.svg");    
 
 
@@ -277,9 +282,9 @@
                     .attr("y2", h - newCuatrimestres[i][j])
                     .style("stroke-width", "2")
                     .style("stroke", "black")
-                    .attr("numero", i)
-                    .on("click", mousemove)
-                    .on("mouseout", mouseout)
+						.attr("numero", i)
+						.on("click", mousemove)
+						.on("mouseout", mouseout)
                     .style("stroke-dasharray", ("3, 3"));
                 }
 
@@ -303,7 +308,9 @@
                 .attr("font-size","11")
                 .attr("numero", i)
                 .on("click", mousemove)
-                .on("mouseout", mouseout)				
+                .on("mouseout", mouseout)	
+					.attr("cx",x - (newActual[i])/1.6)
+                    .attr("cy", h-newActual[i])			
                 .attr("fill", "white");
                 
                 x -= newFinalTarget[i]*1.25-separacion;
@@ -324,16 +331,23 @@
          var meta=datos[i]/1000;
          var promedio=last/meta*100;
          
+		 
+		 var cx = d3.select(this).attr("cx");
+		 var cy = d3.select(this).attr("cy")
+		 
+		// alert(cx + "-" + cy);
+		 if(cy > 520){
+		 	cy -= 210;
+		 }
+		 
          div
          .html("<font size='6'><b>" + names[i] + "</font><br><font size='5'>Sales Performance</font><br><font size='2' color='#7c8185'>Attainment vs Annual Goal</font><br><br><font size='4' color='#38761d'>"+ last+"K</font></b> of <b><font size='4' color='#1c4587'>"+meta+"K</font><br><br><font size='2' color='#7c8185'>% of Annual Goal Met</font><br><font size='5' color='#38761d'>"+promedio.toFixed(2)+"%</font></b>")
-         .style("left", (d3.event.pageX - 230) + "px")
-         .style("top", (d3.event.pageY - 12) + "px");
+         .style("left", (cx) + "px")
+         .style("top", (cy) + "px");
      }
      
      function mouseout() {
-         div.transition()
-         .duration(500)
-         .style("opacity", 1e-6);
+         
      }
      </script>
  </div>
