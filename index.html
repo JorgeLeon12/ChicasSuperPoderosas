@@ -4,6 +4,33 @@
     <title>
         Performance
     </title>
+    <script type="text/javascript" src="D3/d3.min.js"></script>
+<script type="text/javascript" src="D3/d3.time.min.js"></script>
+<style type="text/css">
+
+body {
+font: 10px sans-serif;
+}
+
+.rules line, .rules path {
+shape-rendering: crispEdges;
+stroke: #000;
+}
+
+.rules .tick {
+}
+.rules .minor {
+stroke: #BBB;
+}
+.rules .domain {
+fill: none;
+}
+
+.grid .tick {
+stroke: #CCC;
+}
+
+</style>
 </head>
 
 
@@ -66,6 +93,7 @@
     }
 
     function draw(linearScale){
+
         var svg = d3.select("body").append("svg");
         var x = 0;
         var separacion = 20;
@@ -89,6 +117,30 @@
         .attr("width", w)
         .attr("height", h)
         .attr("xlink:href", "assets/background-sky.svg");
+
+        var y = d3.scale.linear().domain([d3.max(datos), 0]).range([0,d3.max(datos)/2000]);
+        svg.append("svg:svg")
+        svg.attr("height", h)
+        .attr("width", w)
+        var vis = svg.append("svg:g")
+        .attr("transform", "translate(50,98)")
+        var rules = vis.append("svg:g").classed("rules", true)
+        function make_y_axis() {
+        return d3.svg.axis()
+        .scale(y)
+        .orient("left")
+        .ticks(12)
+        }
+        rules.append("svg:g").classed("grid y_grid", true)
+        .call(make_y_axis()
+        .tickSize(-w,0,0)
+        .tickFormat("")
+        )
+        rules.append("svg:g").classed("labels y_labels", true)
+        .call(make_y_axis()
+        .tickSubdivide(0)
+        .tickSize(0, 10, 0)
+        )
     }
 
     function newData(svg, linearScale, x, separacion, newFinalTarget, newActual, newCuatrimestres){
