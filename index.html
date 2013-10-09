@@ -39,10 +39,8 @@
                 actual[i]=jsondata.teamPerformance[i].data[jsondata.teamPerformance[i].data.length-1].amount;
                 names[i]=jsondata.teamPerformance[i].name;
                 cuatrimestres[i] = [];
-                console.log(names[i]);
-                for(var j = 0; j < jsondata.teamPerformance[i].data.length; j++){
+                for(var j = 1; j < jsondata.teamPerformance[i].data.length-1; j++){
                     cuatrimestres[i][j] = jsondata.teamPerformance[i].data[j].amount;
-                    console.log(cuatrimestres[i][j]);
                 }
 
             }
@@ -76,12 +74,19 @@
             .attr("xlink:href", "assets/background-sky.svg");
             var newFinalTarget = [];
             var newActual= [];
+            var newCuatrimestres = [];
             var x = 0;
             var separacion = 20;
             for(var i = length-1; i >=0; i--){
                 newFinalTarget[i] = linearScale(datos[i]);
                 newActual[i] = linearScale(actual[i]);
                 x+=newFinalTarget[i]*1.25-separacion;
+                newCuatrimestres[i] = [];
+                for(var j = 0; j < cuatrimestres[i].length; j++){
+                    newCuatrimestres[i][j] = linearScale(cuatrimestres[i][j]);
+                    console.log(newCuatrimestres[i][j]);
+                }
+
 
             }
             x+=separacion;
@@ -94,6 +99,10 @@
                 .attr("x", x-newFinalTarget[i]*1.25)
                 .attr("y", h-newFinalTarget[i])
                 .attr("xlink:href", "assets/green-mountain.svg");
+
+                
+
+
 
                 if (newActual[i]>newFinalTarget[i]){
                     svg.append("image")
@@ -199,7 +208,21 @@
                 .attr("font-family","serif")
                 .attr("font-size","11")
                 .attr("fill", "white");
-                console.log(text.node().getComputedTextLength());
+
+
+                //Dibuja lineas de cuatrimestres
+                for(var j = 1; j < cuatrimestres[i].length-1; j++){
+                    svg.append("line")
+                    .attr("x1", x - (newCuatrimestres[i][j])/1.6)
+                    .attr("y1", h - newCuatrimestres[i][j])
+                    .attr("x2", x - (newCuatrimestres[i][j])/1.6 - (newFinalTarget[i] - newCuatrimestres[i][j])*1.25)
+                    .attr("y2", h - newCuatrimestres[i][j])
+                    .style("stroke-width", "2")
+                    .style("stroke", "black")
+                    .style("stroke-dasharray", ("3, 3"));
+
+                }
+
 
                 x -= newFinalTarget[i]*1.25-separacion;
             }
