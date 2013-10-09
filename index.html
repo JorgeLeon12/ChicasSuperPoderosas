@@ -14,17 +14,18 @@
         <script type="text/javascript">
 
         var h = 480*1.5;
-        var w = 5940*1.5;
+        var w = 4940*1.5;
         var datos = [];
         var actual= [];
         var names= [];
+        var cuatrimestres = [];
         var length;
 
         d3.json('target.json', read);
 
         function randomColor() { 
             var letters = '0123456789ABCDEF'.split(''); 
-            var color = '#'; 
+            var color = '#';
             for (var i = 0; i < 6; i++ ) { 
                 color += letters[Math.round(Math.random() * 15)]; 
             } 
@@ -37,6 +38,12 @@
                 datos[i] = jsondata.teamPerformance[i].finalTarget;
                 actual[i]=jsondata.teamPerformance[i].data[jsondata.teamPerformance[i].data.length-1].amount;
                 names[i]=jsondata.teamPerformance[i].name;
+                cuatrimestres[i] = [];
+                console.log(names[i]);
+                for(var j = 0; j < jsondata.teamPerformance[i].data.length; j++){
+                    cuatrimestres[i][j] = jsondata.teamPerformance[i].data[j].amount;
+                    console.log(cuatrimestres[i][j]);
+                }
 
             }
             length=jsondata.teamPerformance.length;
@@ -70,20 +77,21 @@
             var newFinalTarget = [];
             var newActual= [];
             var x = 0;
+            var separacion = 20;
             for(var i = length-1; i >=0; i--){
-
                 newFinalTarget[i] = linearScale(datos[i]);
                 newActual[i] = linearScale(actual[i]);
-                x+=newFinalTarget[i];
+                x+=newFinalTarget[i]*1.25-separacion;
 
             }
+            x+=separacion;
 
             for(var i = length-1; i >=0; i--){
 
                 svg.append("image")
                 .attr("width", newFinalTarget[i]*1.25)
                 .attr("height", newFinalTarget[i])
-                .attr("x", x-newFinalTarget[i])
+                .attr("x", x-newFinalTarget[i]*1.25)
                 .attr("y", h-newFinalTarget[i])
                 .attr("xlink:href", "assets/green-mountain.svg");
 
@@ -91,29 +99,34 @@
                     svg.append("image")
                     .attr("width", 60)
                     .attr("height", 84)
-                    .attr("x", x+(newFinalTarget[i]*1.25)/2-30-newFinalTarget[i])
+                    .attr("x", x-(newFinalTarget[i]*1.25/2)-30)
                     .attr("y", h-newActual[i]-84)
                     .attr("xlink:href", "assets/balloon.svg");
 
                     svg.append("circle")
-                    .attr("cx", x+(newFinalTarget[i]*1.25)/2-newFinalTarget[i])
+                    .attr("cx", x-(newFinalTarget[i]*1.25/2))
+                   
+                    //.attr("cx", x+(newFinalTarget[i]*1.25)/2-newFinalTarget[i])
                     .attr("cy", h-newActual[i]+15)
                     .attr("r", 10)
                     .style("fill",randomColor());
 
                     svg.append("line")
-                    .attr("x1", x+(newFinalTarget[i]*1.25)/2-newFinalTarget[i])
-                    .attr("x2", x+(newFinalTarget[i]*1.25)/2-newFinalTarget[i])
+                    .attr("x1", x-(newFinalTarget[i]*1.25/2))
+                    .attr("x2", x-(newFinalTarget[i]*1.25/2))
                     .attr("y1", h-newFinalTarget[i])
-                    .attr("y2", h-newActual[i]+25)
-                    .style("stroked-width", "6")
-                    .style("stroke", "white");
+                    .attr("y2", h-newActual[i]+15)
+                    .style("stroke-width", "2")
+                    .style("stroke", "black");
 
                     svg.append("circle")
-                    .attr("cx", x+(newFinalTarget[i]*1.25)/2-newFinalTarget[i])
+                    .attr("cx", x-(newFinalTarget[i]*1.25/2))
                     .attr("cy", h-newActual[i]+15)
                     .attr("r", 4)
                     .style("fill","white");
+
+
+                    
 
                 }    
 
@@ -121,18 +134,18 @@
                     svg.append("image")
                     .attr("width", 37.193)
                     .attr("height", 44.126)
-                    .attr("x", x+(newFinalTarget[i]*1.25)/2+37.193/40-newFinalTarget[i])
+                    .attr("x", x-(newFinalTarget[i]*1.25/2))
                     .attr("y", h-newFinalTarget[i]-44.126)
                     .attr("xlink:href", "assets/flag-annual-target.svg");
 
                     svg.append("circle")
-                    .attr("cx", x+(newFinalTarget[i]*1.25)/2+37.193/40-newFinalTarget[i])
+                    .attr("cx", x-(newFinalTarget[i]*1.25/2))
                     .attr("cy", h-newActual[i])
                     .attr("r", 10)
                     .style("fill",randomColor());
 
                     svg.append("circle")
-                    .attr("cx", x+(newFinalTarget[i]*1.25)/2+37.193/40-newFinalTarget[i])
+                    .attr("cx", x-(newFinalTarget[i]*1.25/2))
                     .attr("cy", h-newActual[i])
                     .attr("r", 4)
                     .style("fill","white");
@@ -144,26 +157,26 @@
                     svg.append("image")
                     .attr("width", newFinalTarget[i]*1.25)
                     .attr("height", newFinalTarget[i]-newActual[i])
-                    .attr("x", x-newFinalTarget[i])
+                    .attr("x", x-newFinalTarget[i]*1.25)
                     .attr("y", h-newFinalTarget[i])
                     .attr("xlink:href", "assets/mountain.svg");
 
                     svg.append("image")
                     .attr("width", newFinalTarget[i]*1.25)
                     .attr("height", newFinalTarget[i])
-                    .attr("x", x-newFinalTarget[i])
+                    .attr("x", x-newFinalTarget[i]*1.25)
                     .attr("y", h-newFinalTarget[i])
                     .attr("xlink:href", "assets/TransMountain.svg");    
 
 
                     svg.append("circle")
-                    .attr("cx", ((x - newFinalTarget[i]+(newFinalTarget[i]*1.25)) - (newActual[i])/1.6))
+                    .attr("cx", x - (newActual[i])/1.6)
                     .attr("cy", h-newActual[i])
                     .attr("r", 10)
                     .style("fill",randomColor());
 
                     svg.append("circle")
-                    .attr("cx", ((x - newFinalTarget[i]+(newFinalTarget[i]*1.25)) - (newActual[i])/1.6))
+                    .attr("cx", x - (newActual[i])/1.6)
                     .attr("cy", h-newActual[i])
                     .attr("r", 4)
                     .style("fill","white");
@@ -177,18 +190,18 @@
                     for(var j=0; j<nomb.length;j++){
                         string += nomb[j] + "\n\ " ;
                     }
-                    console.log(string);
+                    
                     return string;
                 })
-                .attr("x", function() {return x-newFinalTarget[i]+newFinalTarget[i]*1.25/2   ;})
+                .attr("x", function() {return x-(newFinalTarget[i]*1.25/2);})
                 .attr("text-anchor","middle")
-                .attr("y", h-20)
+                .attr("y", h-separacion)
                 .attr("font-family","serif")
                 .attr("font-size","11")
                 .attr("fill", "white");
                 console.log(text.node().getComputedTextLength());
 
-                x -= newFinalTarget[i];
+                x -= newFinalTarget[i]*1.25-separacion;
             }
 
 
