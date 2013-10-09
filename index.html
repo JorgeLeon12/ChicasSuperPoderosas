@@ -20,7 +20,7 @@
   </style>
 
   <div id="grafico">
-    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src="D3/d3.min.js" charset="utf-8"></script>
     <script type="text/javascript">
 
     var h = 480*1.2;
@@ -144,13 +144,49 @@
                 .attr("cx", x-(newFinalTarget[i]*1.25/2)+2)
                 .attr("cy", h-newActual[i]-195)
                 .attr("xlink:href", "assets/green-mountain.svg");
+
+
             if(newActual[i]>newFinalTarget[i]){
                     svg.append("image")
                     .attr("width", 60)
                     .attr("height", 84)
                     .attr("x", x-(newFinalTarget[i]*1.25/2)-30)
+                    .attr("y", h-newActual[i]-84+200)
+                    .transition()
+                    .delay(210)
+                    .duration(1000) 
                     .attr("y", h-newActual[i]-84)
                     .attr("xlink:href", "assets/balloon.svg");
+                    
+                    
+
+                    svg.append("image")
+                    .attr("width", newFinalTarget[i]*1.25)
+                    .attr("height", newFinalTarget[i])
+                    .attr("x", x-newFinalTarget[i]*1.25)
+                    .attr("y", h-newFinalTarget[i])
+                    .attr("numero", i)
+                    .on("click", mousemove)
+                    .attr("cx", x - (newActual[i])/1.6)
+                    .attr("cy", h-newActual[i])
+                    .transition()
+                    .delay(100)
+                    .duration(1000) 
+                    .attr("height", newFinalTarget[i]-newActual[i])
+                    .attr("xlink:href", "assets/mountain.svg");
+
+                    svg.append("image")
+                    .attr("width", newFinalTarget[i]*1.25)
+                    .attr("height", newFinalTarget[i])
+                    .attr("x", x-newFinalTarget[i]*1.25)
+                    .attr("y", h-newFinalTarget[i])
+                    .attr("numero", i)
+                    .on("click", mousemove)
+                    .attr("cx", x - (newActual[i])/1.6)
+                    .attr("cy", h-newActual[i])
+                    .attr("xlink:href", "assets/TransMountain.svg");
+
+
                     svg.append("svg:g")
                     .append("circle")
                     .attr("cx", x)
@@ -164,15 +200,22 @@
                     .attr("cx", x-(newFinalTarget[i]*1.25/2))
                     .attr("cy", h-newActual[i]+15)
                     .style("fill",randomColor());
+
+
                     svg.append("line")
                     .attr("x1", x-(newFinalTarget[i]*1.25/2))
                     .attr("x2", x-(newFinalTarget[i]*1.25/2))
                     .attr("y1", h-newFinalTarget[i])
-                    .attr("y2", h-newActual[i]+15)
+                    .attr("y2", h-newFinalTarget[i])
                     .style("stroke-width", "2")
-                    .style("stroke", "black");
-                   
+                    .style("stroke", "black")
+                    .transition()
+                    .delay(300)
+                    .duration(1000) 
+                    .attr("y1", h-newFinalTarget[i])
+                    .attr("y2", h-newActual[i]+15);
                     
+                   
                     svg.append("svg:g")
                     .append("circle")
                     .attr("cx",  x)
@@ -186,18 +229,53 @@
                     .duration(1000) 
                     .attr("cx", x-(newFinalTarget[i]*1.25/2))
                     .attr("cy", h-newActual[i]+15)
+
                     
                 }
 
             else if (newActual[i]==newFinalTarget[i]){
+                    
+
                     svg.append("image")
                     .attr("width", 37.193)
                     .attr("height", 44.126)
                     .attr("x", x-(newFinalTarget[i]*1.25/2))
+                    .attr("y", h-newFinalTarget[i]-44.126+100)
+                    .transition()
+                    .delay(200)
+                    .duration(1000) 
                     .attr("y", h-newFinalTarget[i]-44.126)
                     .attr("cx", x-(newFinalTarget[i]*1.25/2))
                     .attr("cy", h-newActual[i])
                     .attr("xlink:href", "assets/flag-annual-target.svg");
+
+
+
+                    svg.append("image")
+                    .attr("width", newFinalTarget[i]*1.25)
+                    .attr("height", newFinalTarget[i])
+                    .attr("x", x-newFinalTarget[i]*1.25)
+                    .attr("y", h-newFinalTarget[i])
+                    .attr("numero", i)
+                    .on("click", mousemove)
+                    .attr("cx", x - (newActual[i])/1.6)
+                    .attr("cy", h-newActual[i])
+                    .transition()
+                    .delay(100)
+                    .duration(1000) 
+                    .attr("height", newFinalTarget[i]-newActual[i])
+                    .attr("xlink:href", "assets/mountain.svg");
+
+                    svg.append("image")
+                    .attr("width", newFinalTarget[i]*1.25)
+                    .attr("height", newFinalTarget[i])
+                    .attr("x", x-newFinalTarget[i]*1.25)
+                    .attr("y", h-newFinalTarget[i])
+                    .attr("numero", i)
+                    .on("click", mousemove)
+                    .attr("cx", x - (newActual[i])/1.6)
+                    .attr("cy", h-newActual[i])
+                    .attr("xlink:href", "assets/TransMountain.svg");
 
                     svg.append("svg:g")
                     .append("circle")
@@ -233,13 +311,17 @@
             else{
                 svg.append("image")
                     .attr("width", newFinalTarget[i]*1.25)
-                    .attr("height", newFinalTarget[i]-newActual[i])
+                    .attr("height", newFinalTarget[i])
                     .attr("x", x-newFinalTarget[i]*1.25)
                     .attr("y", h-newFinalTarget[i])
                     .attr("numero", i)
                     .on("click", mousemove)
                     .attr("cx", x - (newActual[i])/1.6)
                     .attr("cy", h-newActual[i])
+                    .transition()
+                    .delay(100)
+                    .duration(1000) 
+                    .attr("height", newFinalTarget[i]-newActual[i])
                     .attr("xlink:href", "assets/mountain.svg");
                 
                 svg.append("image")
