@@ -140,7 +140,6 @@
                 .attr("meta", datos[i])
                 .attr("numero", i)
                 .on("click", mousemove)
-                //.on("mouseout", mouseout)
                 .attr("cx", x-(newFinalTarget[i]*1.25/2)+2)
                 .attr("cy", h-newActual[i]-195)
                 .attr("xlink:href", "assets/green-mountain.svg");
@@ -373,15 +372,23 @@
 
     function drawLines(svg, x, newFinalTarget, newCuatrimestres, i){
         for(var j = 1; j < cuatrimestres[i].length-1; j++){
+            //Animar lineas de cuatrimestres
             svg.append("line")
+                .attr("x1", x)
+                .attr("x2", x - newFinalTarget[i]*1.25)  
+                .attr("y1", h)
+                .attr("y2", h)
+                .style("stroke-width", "1")
+                .style("stroke", "white")
+                .transition()
+                .delay(100)
+                .duration(1000)
                 .attr("x1", x - (newCuatrimestres[i][j])/1.6)
                 .attr("y1", h - newCuatrimestres[i][j])
                 .attr("x2", x - (newCuatrimestres[i][j])/1.6 - (newFinalTarget[i] - newCuatrimestres[i][j])*1.25)
                 .attr("y2", h - newCuatrimestres[i][j])
-                .style("stroke-width", "1")
-                .style("stroke", "white")
                 .attr("numero", i)
-                .on("click", mousemove)
+                
                 //.on("mouseout", mouseout)
                 .style("stroke-dasharray", ("3, 3"));
         }
