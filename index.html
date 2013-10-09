@@ -82,9 +82,9 @@
                 newActual[i] = linearScale(actual[i]);
                 x+=newFinalTarget[i]*1.25-separacion;
                 newCuatrimestres[i] = [];
-                for(var j = 0; j < cuatrimestres[i].length; j++){
+                //Escala las lineas de los cuatrimestres
+                for(var j = 1; j < cuatrimestres[i].length-1; j++){
                     newCuatrimestres[i][j] = linearScale(cuatrimestres[i][j]);
-                    console.log(newCuatrimestres[i][j]);
                 }
 
 
