@@ -14,7 +14,7 @@
         <script type="text/javascript">
 
         var h = 480*1.5;
-        var w = 940*1.5;
+        var w = 5940*1.5;
         var datos = [];
         var actual= [];
         var names= [];
@@ -169,17 +169,24 @@
                     .style("fill","white");
                 }
 
-                svg.append("text")
-                .attr("x",x-(newFinalTarget[i]*1.25)/2)
+                var nombre= names[i];
+                var text = svg.append("text")
+                .text(function() {
+                    var nomb =nombre.split();
+                    var string="";
+                    for(var j=0; j<nomb.length;j++){
+                        string += nomb[j] + "\n\ " ;
+                    }
+                    console.log(string);
+                    return string;
+                })
+                .attr("x", function() {return x-newFinalTarget[i]+newFinalTarget[i]*1.25/2   ;})
+                .attr("text-anchor","middle")
                 .attr("y", h-20)
-                .text(names[i])
                 .attr("font-family","serif")
                 .attr("font-size","11")
                 .attr("fill", "white");
-
-                /*d3.select("body").append("i").html(names[i])
-                .attr("x",x)
-                .attr("y",h-newFinalTarget[i]);*/
+                console.log(text.node().getComputedTextLength());
 
                 x -= newFinalTarget[i];
             }
