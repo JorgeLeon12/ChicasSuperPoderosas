@@ -405,6 +405,22 @@ stroke: #CCC;
                     .attr("xlink:href", "assets/TransMountain.svg");    
 
                 svg.append("svg:g")
+                    .append("line")
+                    .attr("x1", x)
+                    .attr("x2", x - newFinalTarget[i]*1.25)  
+                    .attr("y1", h)
+                    .attr("y2", h)
+                    .style("stroke-width", "3")
+                    .style("stroke", "white")
+                    .transition()
+                    .delay(100)
+                    .duration(1000)
+                    .attr("x1", x  - (newActual[i])/1.6)
+                    .attr("y1", h - newActual[i])
+                    .attr("x2", x-newFinalTarget[i]*1.25+(newActual[i]/1.6))
+                    .attr("y2", h - newActual[i]);
+
+                svg.append("svg:g")
                     .append("circle")
                     .attr("cx",  x )
                     .attr("cy", h)
