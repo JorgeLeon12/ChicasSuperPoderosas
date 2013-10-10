@@ -87,8 +87,8 @@ stroke: #CCC;
         var minDataPoint = d3.min(datos);
         var maxDataPoint = d3.max(datos);
         var linearScale = d3.scale.linear()
-        .domain([minDataPoint,maxDataPoint])
-        .range([minDataPoint/2000,maxDataPoint/2000]);
+        .domain([0,maxDataPoint])
+        .range([0,h]);
         draw(linearScale);
     }
 
@@ -474,9 +474,8 @@ stroke: #CCC;
                 .attr("x2", x - (newCuatrimestres[i][j])/1.6 - (newFinalTarget[i] - newCuatrimestres[i][j])*1.25)
                 .attr("y2", h - newCuatrimestres[i][j])
                 .attr("numero", i)
-                
                 //.on("mouseout", mouseout)
-                .style("stroke-dasharray", ("3, 3"));
+                .style("stroke-dasharray", ("10"));
         }
     }
 
