@@ -47,6 +47,8 @@
             }
 
             function read(jsondata) {
+                 var estacion=jsondata.teamPerformance[0].data[5].date;
+                est=estacion.split('-')[1];
                 for(var i = 0; i < jsondata.teamPerformance.length; i++){
                     datos[i] = jsondata.teamPerformance[i].finalTarget;
                     actual[i]=jsondata.teamPerformance[i].data[jsondata.teamPerformance[i].data.length-1].amount;
@@ -94,18 +96,7 @@
         .attr("height", h)
         .attr("id", "copy")
         .attr("viewBox", "0 0 960 480");
-        /*
-        svg.append("image")
-        .attr("width", w)
-        .attr("height", h)
-        .attr("xlink:href", "assets/background-mountains.svg")
-        .attr("id", "elimina");
-        svg.append("image")
-        .attr("width", w)
-        .attr("height", h)
-        .attr("xlink:href", "assets/background-sky.svg")
-        .attr("id", "elimina");
-*/
+       
     
 
         var y = d3.scale.linear().domain([maxDataPoint,0]).range([0,h]);
@@ -155,12 +146,42 @@
             .attr("x", i*939)
             .attr("xlink:href", "assets/background-mountains.svg")
             .attr("id", "elimina");
+            if(est>=3 && est<6){//primavera
             svg.append("image")
-            .attr("width", w)
-            .attr("height", h)
-            .attr("x", i*939)
-            .attr("xlink:href", "assets/background-sky.svg")
-            .attr("id", "elimina");
+                .attr("width", w)
+                .attr("height", h)
+                .attr("x", i*939)
+                .attr("xlink:href", "assets/background-sky.svg");    
+        }
+        else if (est>=6 && est<9){//verano
+            svg.append("image")
+                .attr("width", w)
+                .attr("height", h)
+                .attr("x", i*939)
+                .attr("xlink:href", "assets/background-sky-verano.svg"); 
+
+        }
+
+        else if(est>=9 && est<12) { //otoño
+            svg.append("image")
+                .attr("width", w)
+                .attr("height", h)
+                .attr("x", i*939)
+                .attr("xlink:href", "assets/background-sky-otono.svg"); 
+        }
+
+        else{//invierno
+            svg.append("image")
+                .attr("width", w)
+                .attr("height", h)
+                .attr("x", i*939)
+                .attr("xlink:href", "assets/background-sky-invierno.svg"); 
+
+            
+
+
+
+        }
         }
         drawMountains(svg, x, separacion, newFinalTarget, newActual, newCuatrimestres);
     }
