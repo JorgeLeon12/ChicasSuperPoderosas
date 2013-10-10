@@ -33,6 +33,7 @@
     var names= [];
     var cuatrimestres = [];
     var length;
+    var maxDataPoint;
 
     d3.json('target.json', read);
 
@@ -61,7 +62,12 @@
 
     function escale(){
         var minDataPoint = d3.min(datos);
-        var maxDataPoint = d3.max(datos);
+        if (d3.max(datos)>d3.max(actual)){
+            maxDataPoint = d3.max(datos);    
+        }
+        else{
+            maxDataPoint = d3.max(actual)*1.3;       
+        }
         var linearScale = d3.scale.linear()
         .domain([0,maxDataPoint])
         .range([0,h]);
@@ -94,12 +100,12 @@
         .attr("height", h)
         .attr("xlink:href", "assets/background-sky.svg");
 
-        var y = d3.scale.linear().domain([d3.max(datos), 0]).range([0,d3.max(datos)/2000]);
+       var y = d3.scale.linear().domain([maxDataPoint,0]).range([0,h]);
         svg.append("svg:svg")
         svg.attr("height", h)
         .attr("width", w)
         var vis = svg.append("svg:g")
-        .attr("transform", "translate(50,98)")
+        .attr("transform", "translate(50,0)")
         var rules = vis.append("svg:g").classed("rules", true)
         function make_y_axis() {
         return d3.svg.axis()
@@ -214,6 +220,18 @@
                     .attr("cy", h-newActual[i]+15)
                     .attr("xlink:href", "assets/TransMountain.svg");
 
+                    svg.append("line")
+                    .attr("x1", x-(newFinalTarget[i]*1.25/2))
+                    .attr("x2", x-(newFinalTarget[i]*1.25/2))
+                    .attr("y1", h-newFinalTarget[i])
+                    .attr("y2", h-newFinalTarget[i])
+                    .style("stroke-width", "2")
+                    .style("stroke", "white")
+                    .transition()
+                    .delay(300)
+                    .duration(1000) 
+                    .attr("y1", h-newFinalTarget[i])
+                    .attr("y2", h-newActual[i]+15);
 
                     svg.append("svg:g")
                     .append("circle")
@@ -230,18 +248,7 @@
                     .style("fill",randomColor());
 
 
-                    svg.append("line")
-                    .attr("x1", x-(newFinalTarget[i]*1.25/2))
-                    .attr("x2", x-(newFinalTarget[i]*1.25/2))
-                    .attr("y1", h-newFinalTarget[i])
-                    .attr("y2", h-newFinalTarget[i])
-                    .style("stroke-width", "2")
-                    .style("stroke", "black")
-                    .transition()
-                    .delay(300)
-                    .duration(1000) 
-                    .attr("y1", h-newFinalTarget[i])
-                    .attr("y2", h-newActual[i]+15);
+                    
                     
                    
                     svg.append("svg:g")
@@ -440,8 +447,8 @@
                 .attr("x2", x - newFinalTarget[i]*1.25)  
                 .attr("y1", h)
                 .attr("y2", h)
-                .style("stroke-width", "1")
-                .style("stroke", "white")
+                .style("stroke-width", "2")
+                .style("stroke", "#FFA11C")
                 .transition()
                 .delay(100)
                 .duration(1000)
