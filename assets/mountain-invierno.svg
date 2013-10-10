@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="399.951" viewBox="0 0 500 399.951"><polygon fill="#91A1A0" points="494.759,396.982 0,399.951 240,0 260,0"/>
+	<image overflow="visible" enable-background="new" width="2367" height="1971" xlink:href="assets/descarga.png" transform="matrix(.239 0 0 .239 -36 -35.999)" opacity=".2"/>
+	<!--
+	<polygon opacity=".8" fill="#E6E6E6" enable-background="new" points="280.574,91.006 290,80 320,100 258.389,3 258.066,83.291"/>
+	<polygon opacity=".8" fill="#fff" enable-background="new" points="240.104,85.951 250.592,75.425 258.078,83.291 258.389,3 239.828,0 180,99.998 229.725,70"/>
+	<polygon fill="#fff" points="340,399.95 305.5,264.446 258.389,199.95 258.389,3 240,0 0,399.951 500,399.951" opacity=".1"/>
+		-->
+
+	<path fill="#E6E6E6" d="M500 399.951h-500l1.348-2.248 238.652-397.703h20l1.169 1.705 238.831 398.246zm-494.759-2.969h489.518l-236.37-393.982h-16.881l-236.267 393.982z"/>
+</svg>
