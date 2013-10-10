@@ -196,7 +196,6 @@
             }
             else if (est>=9 && est<12){
                 selectedMount="assets/mountain-otono.svg";   
-                var flagLeaves = true;
             }
             else{
                 selectedMount="assets/mountain-invierno.svg";
@@ -491,16 +490,6 @@
             drawLines(svg, x, newFinalTarget, newCuatrimestres, i);
             drawText(svg, x, i, newFinalTarget, newActual, separacion);
             x -= newFinalTarget[i]*1.25-separacion;
-            svg.append("image")
-                    .attr("width", 200)
-                    .attr("height", 200)
-                    .attr("x", 10)
-                    .attr("y", 100)
-                    //.transition()
-                    //.delay(6000)
-                    //.duration(5000)
-                    //.attr("y", 600)
-                    .attr("xlink:href", "assets/leaves.svg");
         }//Termina for principal
         var node=document.getElementById("copy").cloneNode(true);
         node.style.height=100;
