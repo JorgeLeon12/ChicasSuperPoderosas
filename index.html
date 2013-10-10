@@ -78,27 +78,28 @@
 
             function draw(linearScale){
 
-                var svg = d3.select("#grafico").append("svg");
+				var svgContenido = d3.select("#grafico").append("svg");
+                
+
                 var x = 0;
                 var separacion = 20;
                 var newFinalTarget = [];
                 var newActual= [];
                 var newCuatrimestres = [];
-                drawBackground(svg);
+                drawBackground(svgContenido);
         //Las montañas son dibujadas por otro método dentro de la función newData()
-        newData(svg, linearScale, x, separacion, newFinalTarget, newActual, newCuatrimestres);
+        newData(svgContenido, linearScale, x, separacion, newFinalTarget, newActual, newCuatrimestres);
         
     }//Termina funcion draw
 
     function drawBackground(svg){
-        
-        svg.attr("width", w)
-        .attr("height", h)
-        .attr("id", "copy")
-        .attr("viewBox", "0 0 960 480");
        
-    
-
+    	svg.attr("id", "copy");
+		
+		svg.attr("width", w)
+			.attr("height", h)
+			.attr("viewBox", "0 0 960 480");
+		
         var y = d3.scale.linear().domain([maxDataPoint,0]).range([0,h]);
         svg.append("svg:svg")
         svg.attr("height", h)
@@ -125,6 +126,14 @@
     }
 
     function newData(svg, linearScale, x, separacion, newFinalTarget, newActual, newCuatrimestres){
+	
+    	svg.attr("id", "copy");
+		
+		svg.attr("width", w)
+			.attr("height", h)
+			.attr("viewBox", "0 0 960 480");
+		var svg = svg.append("g").attr("id", "Contenido");
+
         for(var i = length-1; i >=0; i--){
             newFinalTarget[i] = linearScale(datos[i]);
             newActual[i] = linearScale(actual[i]);
@@ -495,9 +504,75 @@
         //var tmp = node.getElementsByTagName("g");
         //tmp.parentNode.removeChild(tmp);
         document.getElementById("paste").appendChild(node);
+		
+		//alert(svgContainer);
+		var svgContainer = d3.select("#paste").select("svg");
+ 		
+		
+		//alert(svgContainer);
+		 //Draw the Rectangle
+/*		 var rectangle = svgContainer.append("rect")
+									.attr("x", 0)
+									.attr("y", 0)
+									.attr("width", 960)
+									.attr("height", 480)
+									.attr("fill", "white")
+									.attr("opacity", .40)
+									.style("stroke-width", "20")
+									.style("stroke", "black")
+									.style("z-index" , 10000)
+									.on("dragstart", EmpezarMCuadro)
+									.on("ondragover", MCuadro)
+									.on("ondragleave", DejarMCuadro)
+									.origin(Object)
+									;
+*/									
+		//
+		var d = [{
+			x: 0,
+			y: 0
+		}];
+		
+		var g = d3.select("#paste").select("svg").data(d).append("rect")
+			.attr("width", 960)
+			.attr("height", 480)
+			.style("stroke", "black")
+			.attr("fill", "white")
+			.attr("x", "0")
+			.attr("y", "0")
+			.style("stroke-width", "20")
+			.attr("opacity", .40)
+			.call(d3.behavior.drag().on("drag", dragHandler).on("dragend", dropHandler))
+		
+		var wasMoved = false;
+		
+		function dropHandler(d) {
+			if (wasMoved) {
+				console.log("dropped");
+				wasMoved = false;
+			} else {
+				console.log("clicked");
+			}
+		}
+		
+		function dragHandler(d) {
+			wasMoved = d3.event.dx || d3.event.dy
+			if (wasMoved) {
+				d.x += d3.event.dx;
+				
+				
+				if(d.x >= 0 && d.x <((960*4) + (960*.35))){
+					d3.select(this).attr("transform", "translate(" + d.x + ")");
+					d3.select("#Contenido").attr("transform", "translate(" + (-d.x) + ")");
+					console.log('dragged');
+				}
+			}
+		
+		}
+		//
 
     }
-
+		
     function drawLines(svg, x, newFinalTarget, newCuatrimestres, i){
         for(var j = 1; j < cuatrimestres[i].length-1; j++){
             //Animar lineas de cuatrimestres
@@ -568,8 +643,12 @@
          }
          cx=cx/1;
          cx+=origenX;
+		 
          var cy = d3.select(this).attr("cy");
-
+		 
+	
+		
+		 
          cy -= 60;		
          if(cy < 180){
             cy += 190;
