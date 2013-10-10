@@ -2,56 +2,32 @@
 <html lang="es">
 <head>
     <title>
-        Performance
+        TeamPerformanceViz
     </title>
-    <script type="text/javascript" src="D3/d3.min.js"></script>
-<script type="text/javascript" src="D3/d3.time.min.js"></script>
-<style type="text/css">
-
-body {
-font: 10px sans-serif;
-}
-
-.rules line, .rules path {
-shape-rendering: crispEdges;
-stroke: #000;
-}
-
-.rules .tick {
-}
-.rules .minor {
-stroke: #BBB;
-}
-.rules .domain {
-fill: none;
-}
-
-.grid .tick {
-stroke: #CCC;
-}
-
-</style>
-</head>
-
-
-<body>
-    <style type="text/css">
+<link rel="stylesheet" type="text/css" href="Estilos.css">
+ <style type="text/css">
     div.tooltip {
       background-image:url(imagenes/FondoDiv.png);
       padding: 5px;
       position: absolute;
       text-align: center;
       border: solid 1px #666666;
-      min-width:280px;
+      min-width:250px;
   }
+	
   </style>
+</head>
+<body>
 
-  <div id="grafico">
+<div class="cover">
+</div>
+
+<div  align="center" style="padding-top:30px">
+<div id="grafico">
     <script src="D3/d3.min.js" charset="utf-8"></script>
-    <script type="text/javascript">
-
-    var h = 480*1.2;
-    var w = 940*1.2;
+    <script type="text/javascript">	
+    var h = 480;
+    var w = 940;
     var datos = [];
     var actual= [];
     var names= [];
@@ -94,7 +70,7 @@ stroke: #CCC;
 
     function draw(linearScale){
 
-        var svg = d3.select("body").append("svg");
+        var svg = d3.select("#grafico").append("svg");
         var x = 0;
         var separacion = 20;
         var newFinalTarget = [];
@@ -505,7 +481,7 @@ stroke: #CCC;
             .attr("fill", "white");
     }
 
-    var div = d3.select("body").append("div")
+    var div = d3.select("#grafico").append("div")
     .attr("class", "tooltip")
     .style("opacity", 1e-6);
     
@@ -513,16 +489,22 @@ stroke: #CCC;
         div.transition()
             .duration(500)
             .style("opacity", 1);
+		var ancho = (document.body.clientWidth);
         var i = d3.select(this).attr("numero");
         var last=actual[i]/1000;
         var meta=datos[i]/1000;
         var promedio=last/meta*100;
 	    var cx = d3.select(this).attr("cx");
-	    var cy = d3.select(this).attr("cy")
+		if(ancho >940){
+			var origenX=(ancho-940)/2;
+		}else{
+			var origenX=0;
+		}
+		cx=cx/1;
+		cx+=origenX;
+	    var cy = d3.select(this).attr("cy");
 		
-//		alert(cy);
-	       cy -= 185;
-//		
+	       cy -= 60;		
 	    if(cy < 180){
 	       cy += 190;
         }
@@ -533,5 +515,7 @@ stroke: #CCC;
     } 
      </script>
  </div>
+ </div>
+  
 </body>
 </html>
