@@ -1,4 +1,4 @@
-var h = 480;
+            var h = 480;
             var w = 940;
 			var Tipo = "name";
             var datos = [];
@@ -10,14 +10,29 @@ var h = 480;
             var tmpx;
 			var CoorXyH = [];
 			var TSelect;
+	        var div = d3.select("#grafico").append("div").attr("id", "tooltip");
 			
 			function CambiarTipo(){
+				div.remove("#tooltip");
+				
+				EsconderSelect();
 				TSelect = document.getElementById("SelectTipo");
 				TSelect = TSelect.value;
 				document.getElementById("copy").remove("#copy");
 				document.getElementById("copy").remove("#copy");
 				DibujarTodo(TSelect);
 			}
+			
+			function EsconderSelect() {
+				var Dato = document.getElementById('SelectTipo');
+				Dato = Dato.value;
+				if(Dato == "name"){
+					document.getElementById('divName').style.display = "block";
+				} else {
+					document.getElementById('divName').style.display = "none";
+				}
+			}
+
 			
 function DibujarTodo(TSelect){
             h = 480;
@@ -30,8 +45,9 @@ function DibujarTodo(TSelect){
             maxDataPoint;
             tmpx;
 
-            	//d3.json('target.json', read);
-				d3.json('json.php?t=' + TSelect, read);
+			//d3.json('target.json', read);
+			d3.json('json.php?t=' + TSelect, read);
+			
             function randomColor() { 
                 var letters = '0123456789ABCDEF'.split(''); 
                 var color = '#';
@@ -641,7 +657,7 @@ function DibujarTodo(TSelect){
         }
         var cy = d3.select(this).attr("cy");
 		 
-        cy -= 85;		
+        cy -= 78;		
         if(cy < 180){
             cy += 190;
         }
@@ -675,5 +691,3 @@ function DibujarTodo(TSelect){
 		d.x = CoorXyH[xSelect][0]+(CoorXyH[xSelect][1])-480-(CoorXyH[xSelect][1]/2);
 	}
 }
-
-//    document.getElementById("paste").appendChild(node);
