@@ -8,14 +8,9 @@
 		trigger_error(mysql_error(), E_USER_ERROR);
 	} else {
 		//mysql_select_db("json") or die(mysql_error()); 
-		
-		if($_GET['t'] == 'type'){
-		//SELECT * FROM pedidos INNER JOIN clientes ON pedidos.clie = clientes.numclie
-			$sql = "SELECT * FROM vendedor INNER JOIN objetivos ON vendedor.id = objetivos.v_id WHERE objetivos.type = \"actual\" ORDER BY ".$_GET['t']." ASC";
-		}else{
-			$sql = "SELECT * FROM vendedor ORDER BY ".$_GET['t']." ASC";
-		}
-		
+
+		$sql = "select * from vendedor order by ".$_GET['t']." ASC";
+
 		$vendedores = mysql_query($sql); 
 	
 		while($row = mysql_fetch_row($vendedores)){

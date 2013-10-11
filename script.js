@@ -1,38 +1,26 @@
-            var h = 480;
-            var w = 940;
-			var Tipo = "name";
-            var datos = [];
-            var actual= [];
-            var names= [];
-            var cuatrimestres = [];
-            var length;
-            var maxDataPoint;
-            var tmpx;
-			var CoorXyH = [];
-			var TSelect;
-	        var div = d3.select("#grafico").append("div").attr("id", "tooltip");
-			
-			function CambiarTipo(){
-				div.remove("#tooltip");
-				
-				EsconderSelect();
-				TSelect = document.getElementById("SelectTipo");
-				TSelect = TSelect.value;
-				document.getElementById("copy").remove("#copy");
-				document.getElementById("copy").remove("#copy");
-				DibujarTodo(TSelect);
-			}
-			
-			function EsconderSelect() {
-				var Dato = document.getElementById('SelectTipo');
-				Dato = Dato.value;
-				if(Dato == "name"){
-					document.getElementById('divName').style.display = "block";
-				} else {
-					document.getElementById('divName').style.display = "none";
-				}
-			}
-
+    var h = 480;
+    var w = 940;
+	var Tipo = "name";
+    var datos = [];
+    var actual= [];
+    var names= [];
+    var cuatrimestres = [];
+    var length;
+    var maxDataPoint;
+    var tmpx;
+    var xScroll = 0;
+	var CoorXyH = [];
+	var TSelect;
+    var div = d3.select("#grafico").append("div").attr("id", "tooltip");
+	
+	function CambiarTipo(){
+		div.remove("#tooltip");
+		TSelect = document.getElementById("SelectTipo");
+		TSelect = TSelect.value;
+		document.getElementById("copy").remove("#copy");
+		document.getElementById("copy").remove("#copy");
+		DibujarTodo(TSelect);
+	}
 			
 function DibujarTodo(TSelect){
             h = 480;
@@ -100,13 +88,11 @@ function DibujarTodo(TSelect){
     }//Termina funcion draw
 
     function drawBackground(svg){
-       
     	svg.attr("id", "copy");
 		
 		svg.attr("width", w)
 			.attr("height", h)
 			.attr("viewBox", "0 0 960 480");
-		
         
         var y = d3.scale.linear().domain([maxDataPoint,0]).range([0,h]);
         svg.append("svg:svg")
@@ -134,9 +120,8 @@ function DibujarTodo(TSelect){
     }
 
     function newData(svg, linearScale, x, separacion, newFinalTarget, newActual, newCuatrimestres){
-	
     	svg.attr("id", "copy");
-		
+
 		svg.attr("width", w)
 			.attr("height", h)
 			.attr("viewBox", "0 0 960 480");
@@ -146,7 +131,6 @@ function DibujarTodo(TSelect){
             newFinalTarget[i] = linearScale(datos[i]);
             newActual[i] = linearScale(actual[i]);
             x += newFinalTarget[i]*1.25-separacion;
-            
             newCuatrimestres[i] = [];
             //Escala las lineas de los cuatrimestres
             for(var j = 1; j < cuatrimestres[i].length-1; j++){
@@ -156,7 +140,6 @@ function DibujarTodo(TSelect){
         x+=separacion+55;
         tmpx = x;
         for(var i = 0; i < x/940+1; i++){
-
             svg.append("image")
             .attr("width", w)
             .attr("height", h)
@@ -178,7 +161,6 @@ function DibujarTodo(TSelect){
                     .attr("xlink:href", "assets/background-sky-verano.svg"); 
 
             }
-
             else if(est>=9 && est<12) { //otoño
                 svg.append("image")
                     .attr("width", w)
@@ -186,7 +168,6 @@ function DibujarTodo(TSelect){
                     .attr("x", i*939)
                     .attr("xlink:href", "assets/background-sky-otono.svg"); 
             }
-
             else{//invierno
                 svg.append("image")
                     .attr("width", w)
@@ -196,22 +177,20 @@ function DibujarTodo(TSelect){
 
             }
         }
-        
         drawMountains(svg, x, separacion, newFinalTarget, newActual, newCuatrimestres);
     }
 
     function drawMountains(svg, x, separacion, newFinalTarget, newActual, newCuatrimestres){
         var selectedMount="";
-            if(est>=3 && est<9){
-                selectedMount="assets/green-mountain.svg";
-
-            }
-            else if (est>=9 && est<12){
-                selectedMount="assets/green-mountain.svg";   
-            }
-            else{
-                selectedMount="assets/mountain-invierno.svg";
-            }
+        if(est>=3 && est<9){
+            selectedMount="assets/green-mountain.svg";
+        }
+        else if (est>=9 && est<12){
+            selectedMount="assets/green-mountain.svg";   
+        }
+        else{
+            selectedMount="assets/mountain-invierno.svg";
+        }
         for(var i = length-1; i >=0; i--){
             svg.append("image")
             .attr("width", 50)
@@ -241,7 +220,6 @@ function DibujarTodo(TSelect){
 			CoorXyH[i] = [];
 			CoorXyH[i][0] = x-newFinalTarget[i]*1.25;
 			CoorXyH[i][1] = newFinalTarget[i]*1.25;
-			//alert((newFinalTarget[i]*1.25) + " Ancho, " + (x-newFinalTarget[i]*1.25) + " X " + CoorXyH[i][0] + "***" + CoorXyH[i][1]);
 
             svg.append("image")
             .attr("width", newFinalTarget[i]*1.25)
@@ -254,8 +232,6 @@ function DibujarTodo(TSelect){
             .attr("cx", x-(newFinalTarget[i]*1.6))
             .attr("cy", h-newActual[i]-195)
             .attr("xlink:href", selectedMount);
-
-
 
             if(newActual[i]>newFinalTarget[i]){
                 svg.append("image")
@@ -335,12 +311,9 @@ function DibujarTodo(TSelect){
                 .duration(1000) 
                 .attr("cx", x-(newFinalTarget[i]*1.25/2))
                 .attr("cy", h-newActual[i]+15)
-
-
             }
 
             else if (newActual[i]==newFinalTarget[i]){
-
 
                 svg.append("image")
                 .attr("width", 37.193)
@@ -397,7 +370,6 @@ function DibujarTodo(TSelect){
                 .attr("x2", x-newFinalTarget[i]*1.25+(newActual[i]/1.6))
                 .attr("y2", h - newActual[i]);
 
-
                 svg.append("svg:g")
                 .append("circle")
                 .attr("cx", x)
@@ -412,7 +384,6 @@ function DibujarTodo(TSelect){
                 .attr("cx", x-(newFinalTarget[i]*1.25/2))
                 .attr("cy", h-newActual[i])
                 .style("fill",randomColor());
-
 
                 svg.append("svg:g")
                 .append("circle")
@@ -444,7 +415,6 @@ function DibujarTodo(TSelect){
                     .duration(1000) 
                     .attr("height", newFinalTarget[i]-newActual[i])
                     .attr("xlink:href", "assets/mountain.svg");
-
                 
                 svg.append("image")
                 .attr("width", newFinalTarget[i]*1.25)
@@ -503,7 +473,6 @@ function DibujarTodo(TSelect){
                 .attr("cy", h-newActual[i]);
             }
             
-            
             drawLines(svg, x, newFinalTarget, newCuatrimestres, i);
             drawText(svg, x, i, newFinalTarget, newActual, separacion);
             x -= newFinalTarget[i]*1.25-separacion;
@@ -544,22 +513,24 @@ function DibujarTodo(TSelect){
 		
 		function dropHandler() {
 			if (wasMoved) {
-				
+				xScroll += t;
 				wasMoved = false;
 			} else {
 				
 			}
 		}
-		
+		var t = 0;
 		function dragHandler(d) {
 			wasMoved = d3.event.dx || d3.event.dy
 			if (wasMoved) {
-				d.x += d3.event.dx;
+				t = d.x += d3.event.dx;
 				
 				
-				if(d.x >= 0 && d.x <((960*4) + (960*.35))){
+				if(d.x >= 0 && d.x < tmpx-960){
                     //d.x += d3.event.dx;
-					d3.select(this).attr("transform", "translate(" + d.x + ")");
+                    alert(d3.select("#CuadroSlider"));
+                    t = d.x;
+					d3.select("#CuadroSlider").attr("x", t);
 					d3.select("#Contenido").attr("transform", "translate(" + (-d.x) + ")");
 					
                     div.remove("#tooltip");
@@ -570,12 +541,11 @@ function DibujarTodo(TSelect){
                 else if(d.x < 0){
                     d.x = 0;
                 }
-                else if(d.x >=((960*4) + (960*.35))){
+                else if(d.x >=tmpx-960){
                     d.x = ((960*4) + (960*.35))-1;
                 }
 			}
 		}
-		//
     }
 		
     function drawLines(svg, x, newFinalTarget, newCuatrimestres, i){
@@ -626,7 +596,6 @@ function DibujarTodo(TSelect){
             .attr("numero", i)
             .attr("fill", "white");
         }
-
         var div = d3.select("#grafico").append("div");
 
         function mousemove() {
@@ -645,49 +614,25 @@ function DibujarTodo(TSelect){
             var meta=datos[i]/1000;
             var promedio=last/meta*100;
             var cx = d3.select(this).attr("cx");
-        if(ancho >940){
-             var origenX=(ancho-940)/2;
-        }else{
-            var origenX=0;
-        }
-        cx=cx/1-10;
-        cx+=origenX;
-		if(d3.select("#Contenido").attr("transform") !== null){
-            cx += parseInt(d3.select("#Contenido").attr("transform").substring(10, d3.select("#Contenido").attr("transform").length - 1))
-        }
-        var cy = d3.select(this).attr("cy");
-		 
-        cy -= 78;		
-        if(cy < 180){
-            cy += 190;
-        }
+            if(ancho >940){
+                 var origenX=(ancho-940)/2;
+            }else{
+                var origenX=0;
+            }
+            cx=cx/1-10;
+            cx+=origenX;
+    		if(d3.select("#Contenido").attr("transform") !== null){
+                cx += parseInt(d3.select("#Contenido").attr("transform").substring(10, d3.select("#Contenido").attr("transform").length - 1));
+            }
+            var cy = d3.select(this).attr("cy");
+    		 
+            cy -= 78;		
+            if(cy < 180){
+                cy += 190;
+            }
             div
-        .html("<font size='6'><b>" + names[i] + "</font><br><font size='5'>Sales Performance</font><br><font size='2' color='#7c8185'>Attainment vs Annual Goal</font><br><br><font size='4' color='#38761d'>"+ last+"K</font></b> of <b><font size='4' color='#1c4587'>"+meta+"K</font><br><br><font size='2' color='#7c8185'>% of Annual Goal Met</font><br><font size='5' color='#38761d'>"+promedio.toFixed(2)+"%</font></b>")
-        .style("left", parseInt(cx) + "px")
-        .style("top", (cy) + "px");
+            .html("<font size='6'><b>" + names[i] + "</font><br><font size='5'>Sales Performance</font><br><font size='2' color='#7c8185'>Attainment vs Annual Goal</font><br><br><font size='4' color='#38761d'>"+ last+"K</font></b> of <b><font size='4' color='#1c4587'>"+meta+"K</font><br><br><font size='2' color='#7c8185'>% of Annual Goal Met</font><br><font size='5' color='#38761d'>"+promedio.toFixed(2)+"%</font></b>")
+            .style("left", parseInt(cx) + "px")
+            .style("top", (cy) + "px");
+        }
     }
-	function CambiarNombre(){
-		var xSelect = document.getElementById("SelectName");
-		xSelect = xSelect.value/1;
-		
-	//	alert(xSelect);
-		
-		//d.x = CoorXyH[xSelect][0];
-	//	alert(-CoorXyH[xSelect][0]-(CoorXyH[xSelect][1])+665)
-	//	alert(CoorXyH[xSelect][0]-CoorXyH[xSelect][1]-2500);
-		
-	//	alert(d.x);
-		if((-CoorXyH[xSelect][0]-(CoorXyH[xSelect][1])+665) >= 0){
-			d3.select("#CuadroSlider").attr("x", 0);
-			d3.select("#Contenido").attr("transform", "translate(" + (0) + ")");
-			
-			div.remove("#tooltip");
-		}else{
-			d3.select("#CuadroSlider").attr("transform", "translate(" + (CoorXyH[xSelect][0]+(CoorXyH[xSelect][1])-480-(CoorXyH[xSelect][1]/2)) + ")");
-			d3.select("#Contenido").attr("transform", "translate(" + (-(CoorXyH[xSelect][0]+(CoorXyH[xSelect][1])-480-(CoorXyH[xSelect][1]/2))) + ")");
-			
-			div.remove("#tooltip");
-		}
-		d.x = CoorXyH[xSelect][0]+(CoorXyH[xSelect][1])-480-(CoorXyH[xSelect][1]/2);
-	}
-}
