@@ -9,7 +9,7 @@
     <script src="script.js" charset="utf-8"></script>   
 </head>
 
-<body onLoad="DibujarTodo('name')">
+<body onLoad="Start('name')">
     <div class="cover">
         <div class="cover-center">
             <div class="centrado">
@@ -24,7 +24,7 @@
                 <td width="80">
                     <div id="divTipo">
             	       Organizar por:<br>
-                        <select id="SelectTipo" onChange="CambiarTipo()">
+                        <select id="SelectTipo" onChange="ChangeCanvas()">
                             <option value="name">Nombre</option>
                             <option value="finalTarget">Meta</option>
                         </select>
@@ -39,7 +39,7 @@
             </div>
         </div>
         <div  align="center" style="padding-top:30px">
-            <div id="paste"> 
+            <div id="svg-miniature"> 
             </div>
         </div>
     </div>
