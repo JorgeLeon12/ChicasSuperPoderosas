@@ -15,6 +15,10 @@
             <div class="centrado">
                 <h1>TeamPerformanceViz</h1>
             </div>
+            <div style="float:right; padding-right:18%;">
+            	<a href="subirJson.php">Subir JSON</a>
+                <a href="json.php?t=name">Obtener JSON</a>
+            </div>
         </div>
     </div>
     <div class="contenedor">
