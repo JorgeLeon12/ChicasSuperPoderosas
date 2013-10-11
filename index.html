@@ -35,7 +35,7 @@
             var maxDataPoint;
             var tmpx;
 
-            d3.json('target.json', read);
+            d3.json('json.php', read);
             function randomColor() { 
                 var letters = '0123456789ABCDEF'.split(''); 
                 var color = '#';
@@ -195,7 +195,7 @@
 
             }
             else if (est>=9 && est<12){
-                selectedMount="assets/mountain-otono.svg";   
+                selectedMount="assets/green-mountain.svg";   
             }
             else{
                 selectedMount="assets/mountain-invierno.svg";
