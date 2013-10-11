@@ -528,7 +528,6 @@ function DibujarTodo(TSelect){
 				
 				if(d.x >= 0 && d.x < tmpx-960){
                     //d.x += d3.event.dx;
-                    alert(d3.select("#CuadroSlider"));
                     t = d.x;
 					d3.select("#CuadroSlider").attr("x", t);
 					d3.select("#Contenido").attr("transform", "translate(" + (-d.x) + ")");
