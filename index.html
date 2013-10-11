@@ -37,7 +37,7 @@ Team
             }
 
             function read(jsondata) {
-                 var estacion=jsondata.teamPerformance[0].data[5].date;
+                var estacion=jsondata.teamPerformance[0].data[5].date;
                 est=estacion.split('-')[1];
                 for(var i = 0; i < jsondata.teamPerformance.length; i++){
                     datos[i] = jsondata.teamPerformance[i].finalTarget;
@@ -86,6 +86,7 @@ Team
 			.attr("height", h)
 			.attr("viewBox", "0 0 960 480");
 		
+        
         var y = d3.scale.linear().domain([maxDataPoint,0]).range([0,h]);
         svg.append("svg:svg")
         svg.attr("height", h)
@@ -174,19 +175,31 @@ Team
 
             }
         }
+        
         drawMountains(svg, x, separacion, newFinalTarget, newActual, newCuatrimestres);
     }
 
     function drawMountains(svg, x, separacion, newFinalTarget, newActual, newCuatrimestres){
+        var selectedMount="";
+            if(est>=3 && est<9){
+                selectedMount="assets/green-mountain.svg";
+
+            }
+            else if (est>=9 && est<12){
+                selectedMount="assets/green-mountain.svg";   
+            }
+            else{
+                selectedMount="assets/mountain-invierno.svg";
+            }
         for(var i = length-1; i >=0; i--){
             svg.append("image")
             .attr("width", 50)
             .attr("height", 300)
-            .attr("x", -100)
-            .attr("y", 100)
+            .attr("x", Math.random()*tmpx)
+            .attr("y", h-(Math.random()*480 +200))
             .attr("id", "#nube")
             .transition()
-            .delay(i*4000)
+            .delay(1000)
             .duration(50500)
             .attr("x", 5770)
             .attr("y", 150)
@@ -195,10 +208,10 @@ Team
             svg.append("image")
             .attr("width", 100)
             .attr("height", 100)
-            .attr("x", -100)
-            .attr("y", 100)
+            .attr("x", Math.random()*tmpx)
+            .attr("y", h-(Math.random()*480 +200))
             .transition()
-            .delay(i*6000)
+            .delay(1000)
             .duration(50500)
             .attr("x", 5770)
             .attr("y", 100)
@@ -214,7 +227,9 @@ Team
             .on("click", mousemove)
             .attr("cx", x-(newFinalTarget[i]*1.6))
             .attr("cy", h-newActual[i]-195)
-            .attr("xlink:href", "assets/green-mountain.svg");
+            .attr("xlink:href", selectedMount);
+
+
 
             if(newActual[i]>newFinalTarget[i]){
                 svg.append("image")
@@ -314,8 +329,6 @@ Team
                 .attr("cy", h-newActual[i])
                 .attr("xlink:href", "assets/flag-annual-target.svg");
 
-
-
                 svg.append("image")
                 .attr("width", newFinalTarget[i]*1.25)
                 .attr("height", newFinalTarget[i])
@@ -392,19 +405,20 @@ Team
             }
             else{
                 svg.append("image")
-                .attr("width", newFinalTarget[i]*1.25)
-                .attr("height", newFinalTarget[i])
-                .attr("x", x-newFinalTarget[i]*1.25)
-                .attr("y", h-newFinalTarget[i])
-                .attr("numero", i)
-                .on("click", mousemove)
-                .attr("cx", x - (newActual[i])/1.6)
-                .attr("cy", h-newActual[i])
-                .transition()
-                .delay(100)
-                .duration(1000) 
-                .attr("height", newFinalTarget[i]-newActual[i])
-                .attr("xlink:href", "assets/mountain.svg");
+                    .attr("width", newFinalTarget[i]*1.25)
+                    .attr("height", newFinalTarget[i])
+                    .attr("x", x-newFinalTarget[i]*1.25)
+                    .attr("y", h-newFinalTarget[i])
+                    .attr("numero", i)
+                    .on("click", mousemove)
+                    .attr("cx", x - (newActual[i])/1.6)
+                    .attr("cy", h-newActual[i])
+                    .transition()
+                    .delay(100)
+                    .duration(1000) 
+                    .attr("height", newFinalTarget[i]-newActual[i])
+                    .attr("xlink:href", "assets/mountain.svg");
+
                 
                 svg.append("image")
                 .attr("width", newFinalTarget[i]*1.25)
@@ -460,14 +474,17 @@ Team
                 .delay(100)
                 .duration(1000) 
                 .attr("cx",  x - (newActual[i])/1.6)
-                .attr("cy", h-newActual[i]); 
+                .attr("cy", h-newActual[i]);
             }
+            
+            
             drawLines(svg, x, newFinalTarget, newCuatrimestres, i);
             drawText(svg, x, i, newFinalTarget, newActual, separacion);
             x -= newFinalTarget[i]*1.25-separacion;
         }//Termina for principal
         var node=document.getElementById("copy").cloneNode(true);
         node.style.height=100;
+
         //node.style.width=w;
         var tmp2 = tmpx.toString();
         
