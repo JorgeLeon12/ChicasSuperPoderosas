@@ -209,6 +209,11 @@
         else{
             selectedMount="assets/mountain-invierno.svg";
         }
+
+        drawQuarter(est);
+
+        drawStatus(actual, finalTarget);
+
         //Dibuja todas las montañas junto con sus elementos
         for(var i = length-1; i >=0; i--){
             //Se inicializan las variables globales utilizadas despues en el scrollbar
@@ -409,13 +414,22 @@
             .attr("x", Math.random()*tmpx)
             .attr("y", h-(Math.random()*480 +200))
             .attr("id", "#nube")
+            .transition()
+            .delay(500)
+            .duration(45000)
+            .attr("x", tmpx*Math.random())
             .attr("xlink:href", "assets/cloud-01.svg");
+
 
             svg.append("image")
             .attr("width", 100)
             .attr("height", 100)
             .attr("x", Math.random()*tmpx)
             .attr("y", h-(Math.random()*480 +200))
+            .transition()
+            .delay(500)
+            .duration(55000)
+            .attr("x", tmpx*Math.random())
             .attr("xlink:href", "assets/cloud-02.svg");
     }
 
@@ -443,10 +457,57 @@
                 d.x = 0;
             }
             else if(d.x >=tmpx-960){
-                d.x = ((960*4) + (960*.35))-1;
+                d.x = tmpx-960-1;
             }
 		}
 	}
+
+    function drawQuarter( est){
+        svg = d3.select("#canvas");
+        svg.append("text").attr("x", 210).attr("text-anchor","middle").attr("y", h-430).attr("font-family","sans-serif").attr("font-size","30")
+            .attr("fill", "black").text("TeamPerformanceViz");
+        if(est>=1 && est<=3){
+            svg.append("text").attr("x", 850).attr("text-anchor","middle").attr("y", h-430).attr("font-family","sans-serif").attr("font-size","30")
+            .attr("fill", "black").text("First Quarter");
+        }
+        else if(est>3 && est<=6){
+            svg.append("text").attr("x", 850).attr("text-anchor","middle").attr("y", h-430).attr("font-family","sans-serif").attr("font-size","30")
+            .attr("fill", "black").text("Second Quarter");
+        }
+        else if(est>6 && est<=9){
+            svg.append("text").attr("x", 850).attr("text-anchor","middle").attr("y", h-430).attr("font-family","sans-serif").attr("font-size","30")
+            .attr("fill", "black").text("Third Quarter");   
+        }
+        else{
+            svg.append("text").attr("x", 850).attr("text-anchor","middle").attr("y", h-430).attr("font-family","sans-serif").attr("font-size","30")
+            .attr("fill", "black").text("Fourth Quarter");      
+        }
+    }
+
+    function drawStatus(actual, finalTarget){
+        svg = d3.select("#canvas");
+        var prom=0;
+        var promTarget = 0;
+        for (var i = 0; i<length; i++){
+            prom+=actual[i]/1000;
+            promTarget+=finalTarget[i]/1000;
+        }
+
+        if (prom/promTarget<=1/3){
+            statusColor="red";
+        }
+        else if(prom/promTarget>1/3 && prom/promTarget<=2/3){
+            statusColor="yellow";   
+        }
+        else{
+            statusColor="green";
+        }
+        svg.append("text").attr("x", 850).attr("text-anchor","middle").attr("y", h-395).attr("font-family","sans-serif").attr("font-size","20")
+            .attr("fill", "black").text("Status ");
+
+        svg.append("circle").attr("cx", 890).attr("cy", h-400).attr("r", 1).style("fill", statusColor).transition().delay(500).duration(1000)
+            .attr("r", 10);
+    }
 		
     function drawLines(svg, x, newFinalTarget, newCuatrimestres, i){
         //Animar lineas de cuatrimestres
