@@ -15,10 +15,9 @@
             <div class="centrado">
                 <h1>TeamPerformanceViz</h1>
             </div>
-            <div style="float:right; padding-right:18%; color:#FFFFFF;">
-            	<a href="subirJson.php">Subir JSON</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="json.php?t=name">Obtener JSON</a>
-            </div>
+            <div style="float:right; padding-right:18%; color:#FFFFFF;">            	<a href="index.php">Grafica</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           	<a href="subirJson.php">Subir JSON</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="verJson.php?t=name">Obtener JSON</a></div>
         </div>
     </div>
     <div class="contenedor">

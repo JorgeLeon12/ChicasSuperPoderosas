@@ -10,7 +10,6 @@
     var tmpx;
 	var CoorXyH = [];
 	var TSelect;
-    var statusColor;
     var div = d3.select("#grafico").append("div").attr("id", "tooltip");
 	
 	function ChangeCanvas(){
@@ -201,17 +200,15 @@
     function drawMountains(svg, x, separacion, newFinalTarget, newActual, newCuatrimestres){
         var selectedMount;
         //Dibuja las montañas de acuerdo a las estaciones
-        if(est>=3 && est<12){
+        if(est>=3 && est<9){
             selectedMount="assets/green-mountain.svg";
+        }
+        else if (est>=9 && est<12){
+            selectedMount="assets/green-mountain.svg";   
         }
         else{
             selectedMount="assets/mountain-invierno.svg";
         }
-
-        drawQuarter(est);
-
-        drawStatus(actual, finalTarget);
-
         //Dibuja todas las montañas junto con sus elementos
         for(var i = length-1; i >=0; i--){
             //Se inicializan las variables globales utilizadas despues en el scrollbar
@@ -221,7 +218,7 @@
             if(newActual[i]>newFinalTarget[i]){
                 drawBalloon(svg, x, i, newFinalTarget, newActual);
                 drawMountainBase(svg, x, i, newFinalTarget, finalTarget, newActual, selectedMount);
-                //drawMountain(svg, x, i, newFinalTarget, newActual, selectedMount);
+                drawMountain(svg, x, i, newFinalTarget, newActual, selectedMount);
                 //Linea vertical hacia el globo
                 svg.append("line").attr("x1", x-(newFinalTarget[i]*1.25/2)).attr("x2", x-(newFinalTarget[i]*1.25/2)).attr("y1", h-newFinalTarget[i]).attr("y2", h-newFinalTarget[i]).style("stroke-width", "2").style("stroke", "white")
                 .transition().delay(300).duration(1000).attr("y1", h-newFinalTarget[i]).attr("y2", h-newActual[i]+15);
@@ -234,13 +231,13 @@
             else if (newActual[i]==newFinalTarget[i]){
                 drawMountainBase(svg, x, i, newFinalTarget, finalTarget, newActual, selectedMount);
                 drawFlag(svg, x, i, newFinalTarget, newActual);
-                
+                drawMountain(svg, x, i, newFinalTarget, newActual, selectedMount);
                 drawLineActual(svg, x, i, newFinalTarget, newActual);
                 drawCircleProgress(svg, x, i, newActual);
             }
             else{
                 drawMountainBase(svg, x, i, newFinalTarget, finalTarget, newActual, selectedMount);
-                
+                drawMountain(svg, x, i, newFinalTarget, newActual, selectedMount);
                 drawLineActual(svg, x, i, newFinalTarget, newActual);
                 drawCircleProgress(svg, x, i, newActual);
             }
@@ -326,7 +323,6 @@
             .attr("cx", x-(newFinalTarget[i]*1.6))
             .attr("cy", h-newActual[i]-195)
             .attr("xlink:href", selectedMount);
-            drawMountain(svg, x, i, newFinalTarget, newActual, selectedMount);
     }
 
     function drawMountain(svg, x, i, newFinalTarget, newActual, selectedMount){
@@ -342,15 +338,7 @@
             .transition()
             .delay(100)
             .duration(1000) 
-            .attr("height", function() {
-                if (newFinalTarget[i]-newActual[i] > 0){
-                    return  newFinalTarget[i]-newActual[i];
-                }
-                else{
-                    return 0;
-                }
-                
-            })
+            .attr("height", newFinalTarget[i]-newActual[i])
             .attr("xlink:href", "assets/mountain.svg");
 
         svg.append("image")
@@ -445,7 +433,7 @@
 			t = d.x += d3.event.dx;
 			if(d.x >= 0 && d.x < tmpx-960){
                 //d.x += d3.event.dx;
-
+                //alert(d3.select("#CuadroSlider"));
                 t = d.x;
 				d3.select("#CuadroSlider").attr("x", t);
 				d3.select("#Contenido").attr("transform", "translate(" + (-d.x) + ")");
@@ -455,7 +443,7 @@
                 d.x = 0;
             }
             else if(d.x >=tmpx-960){
-                d.x = tmpx-960-1;
+                d.x = ((960*4) + (960*.35))-1;
             }
 		}
 	}
@@ -482,53 +470,6 @@
         }
     }
 
-    function drawQuarter( est){
-        svg = d3.select("#canvas");
-        svg.append("text").attr("x", 210).attr("text-anchor","middle").attr("y", h-430).attr("font-family","sans-serif").attr("font-size","30")
-            .attr("fill", "black").text("TeamPerformanceViz");
-        if(est>=1 && est<=3){
-            svg.append("text").attr("x", 850).attr("text-anchor","middle").attr("y", h-430).attr("font-family","sans-serif").attr("font-size","30")
-            .attr("fill", "black").text("First Quarter");
-        }
-        else if(est>3 && est<=6){
-            svg.append("text").attr("x", 850).attr("text-anchor","middle").attr("y", h-430).attr("font-family","sans-serif").attr("font-size","30")
-            .attr("fill", "black").text("Second Quarter");
-        }
-        else if(est>6 && est<=9){
-            svg.append("text").attr("x", 850).attr("text-anchor","middle").attr("y", h-430).attr("font-family","sans-serif").attr("font-size","30")
-            .attr("fill", "black").text("Third Quarter");   
-        }
-        else{
-            svg.append("text").attr("x", 850).attr("text-anchor","middle").attr("y", h-430).attr("font-family","sans-serif").attr("font-size","30")
-            .attr("fill", "black").text("Fourth Quarter");      
-        }
-    }
-
-    function drawStatus(actual, finalTarget){
-        svg = d3.select("#canvas");
-        var prom=0;
-        var promTarget = 0;
-        for (var i = 0; i<length; i++){
-            prom+=actual[i]/1000;
-            promTarget+=finalTarget[i]/1000;
-        }
-
-        if (prom/promTarget<=1/3){
-            statusColor="red";
-        }
-        else if(prom/promTarget>1/3 && prom/promTarget<=2/3){
-            statusColor="yellow";   
-        }
-        else{
-            statusColor="green";
-        }
-        svg.append("text").attr("x", 850).attr("text-anchor","middle").attr("y", h-395).attr("font-family","sans-serif").attr("font-size","20")
-            .attr("fill", "black").text("Status ");
-
-        svg.append("circle").attr("cx", 890).attr("cy", h-400).attr("r", 1).style("fill", statusColor).transition().delay(500).duration(1000)
-            .attr("r", 10);
-    }
-
     function drawText(svg, x, i, newFinalTarget, newActual, separacion){
         var nombre= names[i];
         var text = svg.append("text")
@@ -549,7 +490,7 @@
                       .attr("x", function() {return x-(newFinalTarget[i]*1.25/2);})
                       .attr("text-anchor","middle")
                       .attr("y", h-separacion)
-                      .attr("font-family","sans-serif")
+                      .attr("font-family","serif")
                       .attr("font-size","11")
                       .attr("numero", i)
                       .attr("fill", "white");
