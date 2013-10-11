@@ -6,12 +6,27 @@ html, body, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote,
 	
 }
 
+div.tooltip {
+      background-image:url(imagenes/FondoDiv.png);
+      padding: 5px;
+      position: absolute;
+      text-align: center;
+      border: solid 1px #666666;
+      min-width:250px;
+  }
 
 .cover{
 	margin:0%;
-	weight:100%;
-	height:100px;
-	background-image:url(imagenes/cover.png)
+	width:100%;
+	height:50px;
+	color: #AAA;
+	background-color: #000;/*-image:url(imagenes/cover.png)*/
+}
+
+.cover-center{
+	width: 960px;
+	margin: 0 auto;
+	color: #FFF;
 }
 
 .grafica{

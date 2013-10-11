@@ -5,22 +5,13 @@
         TeamPerformanceViz
     </title>
     <link rel="stylesheet" type="text/css" href="Estilos.css">
-    <style type="text/css">
-    div.tooltip {
-      background-image:url(imagenes/FondoDiv.png);
-      padding: 5px;
-      position: absolute;
-      text-align: center;
-      border: solid 1px #666666;
-      min-width:250px;
-  }
-  </style>
 </head>
 <body>
-
-    <div class="cover">
+    <div class="cover" style="display: table;">
+        <div class="cover-center" style="display: table-cell; vertical-align: middle; position: relative;">
+Team
+        </div>
     </div>
-
     <div  align="center" style="padding-top:30px">
         <div id="grafico">
             <script src="D3/d3.min.js" charset="utf-8"></script>
@@ -35,7 +26,7 @@
             var maxDataPoint;
             var tmpx;
 
-            d3.json('target.json', read);
+            d3.json('json.php', read);
             function randomColor() { 
                 var letters = '0123456789ABCDEF'.split(''); 
                 var color = '#';

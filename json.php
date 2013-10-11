@@ -11,7 +11,7 @@
 	} else {
 		mysql_select_db("json") or die(mysql_error()); 
 
-		$sql = "select * from vendedor;";
+		$sql = "select * from vendedor order by name desc;";
 		$vendedores = mysql_query($sql); 
 	
 		while($row = mysql_fetch_row($vendedores)){
