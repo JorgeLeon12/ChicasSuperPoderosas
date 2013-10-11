@@ -21,18 +21,35 @@ div.tooltip {
 	height:50px;
 	color: #AAA;
 	background-color: #000;/*-image:url(imagenes/cover.png)*/
+	display: table;
 }
 
 .cover-center{
 	width: 960px;
-	margin: 0 auto;
+	margin: 0px auto;
 	color: #FFF;
+	display: table-cell; 
+	vertical-align: middle; 
+}
+
+.centrado{
+	width: 960px;
+	margin: 0px auto;
 }
 
 .grafica{
-	alignment-adjust:central;
+	alignment-adjust: central;
 	margin:auto;
 	margin-bottom:5%;	
+}
+
+.contenedor{
+	width: 1000px;
+	margin: -1px auto;
+	background-color: #f5f5f5;
+	border: 1px #ccc solid;
+	padding-bottom: 25px;
+	margin-bottom: 40px;
 }
 
 
