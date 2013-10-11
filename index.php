@@ -9,14 +9,14 @@
     <script src="script.js" charset="utf-8"></script>   
 </head>
 
-<body onLoad="Start('name')">
+<body onLoad="Start('name')" link="#FFFFFF" vlink="#FFFFFF" alink="#FFFFFF">
     <div class="cover">
         <div class="cover-center">
             <div class="centrado">
                 <h1>TeamPerformanceViz</h1>
             </div>
-            <div style="float:right; padding-right:18%;">
-            	<a href="subirJson.php">Subir JSON</a>
+            <div style="float:right; padding-right:18%; color:#FFFFFF;">
+            	<a href="subirJson.php">Subir JSON</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <a href="json.php?t=name">Obtener JSON</a>
             </div>
         </div>
