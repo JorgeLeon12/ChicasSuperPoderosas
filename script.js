@@ -423,6 +423,7 @@
 		if (wasMoved) {
 			wasMoved = false;
 		}
+
 	}
 	var t = 0;
 
