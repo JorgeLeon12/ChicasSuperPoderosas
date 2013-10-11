@@ -6,11 +6,29 @@
     </title>
     <link rel="stylesheet" type="text/css" href="Estilos.css">
 </head>
-<body>
+<body onLoad="DibujarTodo('name')">
     <div class="cover" style="display: table;">
         <div class="cover-center" style="display: table-cell; vertical-align: middle; position: relative;">
 Team
         </div>
+    </div>
+    <div style="height:100%;" align="center">
+    	<select id="SelectName" onChange="CambiarNombre()">
+            <?php
+            	include 'sql.php';
+				$Nombre = mysql_query('SELECT name FROM vendedor ORDER BY name ASC')or die(mysql_error());
+				$Cont = 0;
+				while($rowNombre = mysql_fetch_row($Nombre)){
+					echo '<option value="'.$Cont.'">'.$rowNombre[0].'</option>';
+					$Cont++;
+				}
+			?>
+            </select>
+            
+            <select id="SelectTipo" onChange="CambiarTipo()">
+            	<option value="name">Nombre</option>
+                <option value="finalTarget">Meta</option>
+            </select>
     </div>
     <div  align="center" style="padding-top:30px">
         <div id="grafico">
@@ -18,6 +36,7 @@ Team
             <script type="text/javascript">	
             var h = 480;
             var w = 940;
+			var Tipo = "name";
             var datos = [];
             var actual= [];
             var names= [];
@@ -25,8 +44,30 @@ Team
             var length;
             var maxDataPoint;
             var tmpx;
+			var CoorXyH = [];
+			var TSelect;
+			
+			function CambiarTipo(){
+				TSelect = document.getElementById("SelectTipo");
+				TSelect = TSelect.value;
+				document.getElementById("copy").remove("#copy");
+				document.getElementById("copy").remove("#copy");
+				DibujarTodo(TSelect);
+			}
+			
+function DibujarTodo(TSelect){
+            h = 480;
+            w = 940;
+            datos = [];
+            actual= [];
+            names= [];
+            cuatrimestres = [];
+            length;
+            maxDataPoint;
+            tmpx;
 
-            d3.json('json.php', read);
+            	//d3.json('target.json', read);
+				d3.json('json.php?t=' + TSelect, read);
             function randomColor() { 
                 var letters = '0123456789ABCDEF'.split(''); 
                 var color = '#';
@@ -216,6 +257,11 @@ Team
             .attr("x", 5770)
             .attr("y", 100)
             .attr("xlink:href", "assets/cloud-02.svg");
+
+			CoorXyH[i] = [];
+			CoorXyH[i][0] = x-newFinalTarget[i]*1.25;
+			CoorXyH[i][1] = newFinalTarget[i]*1.25;
+			//alert((newFinalTarget[i]*1.25) + " Ancho, " + (x-newFinalTarget[i]*1.25) + " X " + CoorXyH[i][0] + "***" + CoorXyH[i][1]);
 
             svg.append("image")
             .attr("width", newFinalTarget[i]*1.25)
@@ -503,6 +549,7 @@ Team
 		}];
 		
 		var g = d3.select("#paste").select("svg").data(d).append("rect")
+			.attr("id", "CuadroSlider")
 			.attr("width", 960)
 			.attr("height", 480)
 			.style("stroke", "black")
@@ -515,7 +562,7 @@ Team
 		
 		var wasMoved = false;
 		
-		function dropHandler(d) {
+		function dropHandler() {
 			if (wasMoved) {
 				
 				wasMoved = false;
@@ -527,11 +574,11 @@ Team
 		function dragHandler(d) {
 			wasMoved = d3.event.dx || d3.event.dy
 			if (wasMoved) {
-				//d.x += d3.event.dx;
+				d.x += d3.event.dx;
 				
 				
 				if(d.x >= 0 && d.x <((960*4) + (960*.35))){
-                    d.x += d3.event.dx;
+                    //d.x += d3.event.dx;
 					d3.select(this).attr("transform", "translate(" + d.x + ")");
 					d3.select("#Contenido").attr("transform", "translate(" + (-d.x) + ")");
 					
@@ -539,7 +586,7 @@ Team
                     
                     //d3.select("#tooltip").attr("opacity", 0);
                     
-				}
+				}	
                 else if(d.x < 0){
                     d.x = 0;
                 }
@@ -547,10 +594,8 @@ Team
                     d.x = ((960*4) + (960*.35))-1;
                 }
 			}
-		
 		}
 		//
-
     }
 		
     function drawLines(svg, x, newFinalTarget, newCuatrimestres, i){
@@ -582,7 +627,7 @@ Team
             .text(function() {
                 var nomb =nombre.split(" ");
                 var string="";
-                if(nomb[0].length >= 5){
+                if(nomb[0].length >= 10){
                     string += nomb[0][0]+". ";
                 } 
                 else{
@@ -625,14 +670,14 @@ Team
         }else{
             var origenX=0;
         }
-        cx=cx/1;
+        cx=cx/1-10;
         cx+=origenX;
 		if(d3.select("#Contenido").attr("transform") !== null){
             cx += parseInt(d3.select("#Contenido").attr("transform").substring(10, d3.select("#Contenido").attr("transform").length - 1))
         }
         var cy = d3.select(this).attr("cy");
 		 
-        cy -= 60;		
+        cy -= 85;		
         if(cy < 180){
             cy += 190;
         }
@@ -640,7 +685,32 @@ Team
         .html("<font size='6'><b>" + names[i] + "</font><br><font size='5'>Sales Performance</font><br><font size='2' color='#7c8185'>Attainment vs Annual Goal</font><br><br><font size='4' color='#38761d'>"+ last+"K</font></b> of <b><font size='4' color='#1c4587'>"+meta+"K</font><br><br><font size='2' color='#7c8185'>% of Annual Goal Met</font><br><font size='5' color='#38761d'>"+promedio.toFixed(2)+"%</font></b>")
         .style("left", parseInt(cx) + "px")
         .style("top", (cy) + "px");
-    } 
+    }
+	function CambiarNombre(){
+		var xSelect = document.getElementById("SelectName");
+		xSelect = xSelect.value/1;
+		
+	//	alert(xSelect);
+		
+		//d.x = CoorXyH[xSelect][0];
+	//	alert(-CoorXyH[xSelect][0]-(CoorXyH[xSelect][1])+665)
+	//	alert(CoorXyH[xSelect][0]-CoorXyH[xSelect][1]-2500);
+		
+	//	alert(d.x);
+		if((-CoorXyH[xSelect][0]-(CoorXyH[xSelect][1])+665) >= 0){
+			d3.select("#CuadroSlider").attr("x", 0);
+			d3.select("#Contenido").attr("transform", "translate(" + (0) + ")");
+			
+			div.remove("#tooltip");
+		}else{
+			d3.select("#CuadroSlider").attr("transform", "translate(" + (CoorXyH[xSelect][0]+(CoorXyH[xSelect][1])-480-(CoorXyH[xSelect][1]/2)) + ")");
+			d3.select("#Contenido").attr("transform", "translate(" + (-(CoorXyH[xSelect][0]+(CoorXyH[xSelect][1])-480-(CoorXyH[xSelect][1]/2))) + ")");
+			
+			div.remove("#tooltip");
+		}
+		d.x = CoorXyH[xSelect][0]+(CoorXyH[xSelect][1])-480-(CoorXyH[xSelect][1]/2);
+	}
+}
 
 //    document.getElementById("paste").appendChild(node);
 </script>

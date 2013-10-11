@@ -1,15 +1,15 @@
 <?php
 	include 'sql.php';
 	
-	
+	$r = mysql_connect($host, $user, $pass);
 
 	if (!$r) {
 		echo "Could not connect to server\n";
 		trigger_error(mysql_error(), E_USER_ERROR);
 	} else {
-		//mysql_select_db("json") or die(mysql_error()); 
+		mysql_select_db("json") or die(mysql_error()); 
 
-		$sql = "select * from vendedor order by ".$_GET['t']." ASC";
+		$sql = "select * from vendedor order by name desc;";
 
 		$vendedores = mysql_query($sql); 
 	
